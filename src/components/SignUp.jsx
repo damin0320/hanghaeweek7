@@ -12,8 +12,7 @@ import instagram from "../images/instagram.png"
 const SignUp = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const {account} = useSelector((state) => state.account)
-  console.log(account)
+  // const {account} = useSelector((state) => state.account)
 
   const initialState = {
     email: "",
