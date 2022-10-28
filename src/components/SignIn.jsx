@@ -26,7 +26,7 @@ const SignIn = () => {
     const obj = {
       id : 1,
       //임시
-      userid: login.email,
+      email: login.email,
       password: login.password,
     }
     dispatch(__userLogin(obj))

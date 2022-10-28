@@ -9,8 +9,7 @@ const initialState = {
   error : null
 };
 const params = {
-  // key: process.env.REACT_APP_ACCOUNT,
-  key : "http://localhost:3001/account"
+  key: process.env.REACT_APP_ACCOUNT,
 };
 const SERVICE_URL = params.key
 
@@ -24,12 +23,12 @@ export const __userLogin = createAsyncThunk(
   // login : reducer name, 경로 정해줘야
   async (payload, thunkAPI) => {
     try {
-      // const data = await axios.post(`${SERVICE_URL}/login`, payload);
-      const data = await axios.post(SERVICE_URL, payload);
+      console.log(payload)
+      const data = await axios.post("http://3.39.72.234:8080/api/account/login", payload);
+      console.log(data)
       const Access_Token = data.headers.access_token;
       if (data.status === 200 || data.status === 201) {
         setCookie("Access_Token", Access_Token);
-        setCookie("nickname", data.data.data);
         alert("로그인 성공");
         window.location.replace("/")
       }
@@ -49,10 +48,8 @@ export const __userLogout = createAsyncThunk(
   "account/userLogout",
   async(payload, thunkAPI) => {
     try {
-      // await axios.delete(`${SERVICE_URL}/logout`, {headers : headers})
-      await axios.delete(SERVICE_URL, {headers : headers})
+      await axios.delete("http://3.39.72.234:8080/api/account/logout", {headers : headers})
       delCookie("Access_Token")
-      delCookie("nickname")
       return thunkAPI.fulfillWithValue(payload)
     }catch(error){
       return thunkAPI.rejectWithValue(error);
@@ -64,9 +61,7 @@ export const  __userSignUp = createAsyncThunk(
   "account/userSignUp",
   async (payload, thunkAPI) => {
     try {
-      // const data = await axios.post(`${SERVICE_URL}/signup`, payload)
-      const data = await axios.post(SERVICE_URL, payload)
-
+      const data = await axios.post("http://3.39.72.234:8080/api/account/signup", payload)
       return thunkAPI.fulfillWithValue(data.data)
     } catch (error) {
       return thunkAPI.rejectWithValue(error)
@@ -79,8 +74,7 @@ export const __userProfile = createAsyncThunk(
   "account/userProfile",
   async (payload,thunkAPI) => {
     try {
-      const data = await axios.get(`${SERVICE_URL}/myinfo`)
-      console.log(data)
+      const data = await axios.get("http://3.39.72.234:8080/api/account/myinfo")
       return thunkAPI.fulfillWithValue(data.data)
     } catch (error) {
       return thunkAPI.rejectWithValue(error)

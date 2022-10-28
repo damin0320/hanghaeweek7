@@ -5,13 +5,18 @@ import home from "../images/home.png"
 import plus from "../images/plus.png"
 import profile from "../images/profile.jpeg"
 import { useNavigate } from 'react-router-dom'
+import {useDispatch} from "react-redux"
+
 
 const Header = () => {
   const navigate = useNavigate();
-
   const handleGoToHome = () => {
     navigate("/");
   };
+  const handleGoToProfile = () => {
+    navigate("/mypage");
+  };
+
   return (
     <Head>
       <div>
@@ -21,6 +26,8 @@ const Header = () => {
   <HomeBox>
   <img width={30} height={30}src={home} alt="로고" onClick={handleGoToHome}/>
   <img width={30} height={30}src={plus} alt="로고" />
+  <img width={30} height={30}src={profile} alt="로고" onClick={handleGoToProfile}/>
+
   </HomeBox>
   </IconBox>
   </Head>
@@ -52,5 +59,4 @@ const IconBox = styled.div`
 img {
   margin-right : 10px;
 }
-
-`
+`;

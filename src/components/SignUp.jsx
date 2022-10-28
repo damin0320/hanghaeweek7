@@ -12,7 +12,7 @@ import instagram from "../images/instagram.png"
 const SignUp = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  // const {account} = useSelector((state) => state.account)
+  const {account} = useSelector((state) => state.account)
 
   const initialState = {
     email: "",
@@ -88,27 +88,24 @@ const passwordCheck = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,16}$/;
     }
 
     dispatch(__userSignUp(obj))
-    alert("회원가입이 완료되었습니다.")
-    window.location.replace("/signin")
-    // 임시
   }
-  // useEffect(() => {
-  //   if(account !== undefined){
-  //   if(account.result === true){
-  //     alert("회원가입이 완료되었습니다.")
-  //     setJoin({
-  //       email : "",
-  //       nickname: "",
-  //       password: "",
-  //     })
-  //       window.location.replace("/signin")
-  //   }else{
-  //     if(account.result !== undefined){
-  //       alert(account.error)
-  //     }
-  //    }
-  // }
-  // }, [account])
+  useEffect(() => {
+    if(account !== undefined){
+    if(account.result === true){
+      alert("회원가입이 완료되었습니다.")
+      setJoin({
+        email : "",
+        nickname: "",
+        password: "",
+      })
+        window.location.replace("/signin")
+    }else{
+      if(account.result !== undefined){
+        alert(account.error)
+      }
+     }
+  }
+  }, [account])
 
   return (
 <SignupContainer>
