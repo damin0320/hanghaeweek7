@@ -5,6 +5,7 @@ import PostDetail from "../pages/PostDetail";
 import PostList from "../pages/PostList";
 import SignInPage from "../pages/SignInPage";
 import SignUpPage from "../pages/SignUpPage";
+import Mypage from "../pages/Mypage"
 
 
 const Router = () => {
@@ -17,14 +18,17 @@ const Router = () => {
         {/* 회원가입 페이지 이동하기 */}
         <Route path='signup' element={<SignUpPage />} />
 
-        {/* 무비 리스트 생성 페이지로 이동하기 */}
+        {/* 포스트 리스트 생성 페이지로 이동하기 */}
         <Route path='/addpost' element={<AddPost />} />
         
         {/* 게시글 홈으로 이동하기 */}
         <Route path='/' element={<PostList />} />
 
-        {/* 무비리스트 카드별 상세보기 페이지로 이동하기 */}
+        {/* 포스트리스트 카드별 상세보기 페이지로 이동하기 */}
         <Route path='/PostDetail/:id' element={<PostDetail />} />
+
+        {/* 개인 페이지 이동하기 */}
+        <Route path='/mypage' element={<Mypage />} />
       </Routes>
     </BrowserRouter>
   );
