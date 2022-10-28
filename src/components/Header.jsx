@@ -3,16 +3,23 @@ import styled from 'styled-components'
 import instagram from "../images/instagram.png"
 import home from "../images/home.png"
 import plus from "../images/plus.png"
+import profile from "../images/profile.jpeg"
+import { useNavigate } from 'react-router-dom'
 
 const Header = () => {
+  const navigate = useNavigate();
+
+  const handleGoToHome = () => {
+    navigate("/");
+  };
   return (
     <Head>
       <div>
-  <img width={150} height={40}src={instagram} alt="로고" />
+  <img width={150} height={40}src={instagram} alt="로고" onClick={handleGoToHome}/>
   </div>
   <IconBox>
   <HomeBox>
-  <img width={30} height={30}src={home} alt="로고" />
+  <img width={30} height={30}src={home} alt="로고" onClick={handleGoToHome}/>
   <img width={30} height={30}src={plus} alt="로고" />
   </HomeBox>
   </IconBox>
