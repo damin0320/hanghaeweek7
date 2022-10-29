@@ -8,10 +8,10 @@ const initialState = {
   isLoading : false,
   error : null
 };
-const params = {
-  key: process.env.REACT_APP_ACCOUNT,
-};
-const SERVICE_URL = params.key
+// const params = {
+//   key: process.env.REACT_APP_ACCOUNT,
+// };
+// const SERVICE_URL = params.key
 
 const headers = {
   'Content-Type' : 'application/json',
@@ -23,7 +23,7 @@ export const __userLogin = createAsyncThunk(
   // login : reducer name, 경로 정해줘야
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.post(`${SERVICE_URL}/login`, payload);
+      const data = await axios.post("http://3.39.72.234:8080/api/account/login", payload);
       const Access_Token = data.headers.access_token;
       if (data.status === 200 || data.status === 201) {
         setCookie("Access_Token", Access_Token);
@@ -44,10 +44,8 @@ export const __userLogin = createAsyncThunk(
 export const __userLogout = createAsyncThunk(
   "account/userLogout",
   async(payload, thunkAPI) => {
-    console.log(payload)
     try {
-      await axios.delete(`${SERVICE_URL}/logout`, {headers : headers})
-      delCookie("Access_Token")
+      await axios.delete("http://3.39.72.234:8080/api/account/logout", {headers : headers})
       return thunkAPI.fulfillWithValue(payload)
     }catch(error){
       return thunkAPI.rejectWithValue(error);
@@ -59,7 +57,7 @@ export const  __userSignUp = createAsyncThunk(
   "account/userSignUp",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.post(`${SERVICE_URL}/signup`, payload)
+      const data = await axios.post("http://3.39.72.234:8080/api/account/signup", payload)
       return thunkAPI.fulfillWithValue(data.data)
     } catch (error) {
       return thunkAPI.rejectWithValue(error)
@@ -72,7 +70,7 @@ export const __userProfile = createAsyncThunk(
   "account/userProfile",
   async (payload,thunkAPI) => {
     try {
-      const data = await axios.get(`${SERVICE_URL}/myinfo`)
+      const data = await axios.get("http://3.39.72.234:8080/api/account/myinfo")
       return thunkAPI.fulfillWithValue(data.data)
     } catch (error) {
       return thunkAPI.rejectWithValue(error)
@@ -130,7 +128,6 @@ export const LoginSlice = createSlice({
     [__userProfile.fulfilled]: (state, action) => {
       state.isLoading = false; // 네트워크 요청이 끝났으니, false로 변경합니다.
       state.isSuccess = false;
-      console.log(action.payload)
       state.account=action.payload; // 
       
     },

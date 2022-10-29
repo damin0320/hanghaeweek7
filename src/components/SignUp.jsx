@@ -13,7 +13,6 @@ const SignUp = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const {account} = useSelector((state) => state.account)
-
   const initialState = {
     email: "",
     nickname: "",
@@ -63,8 +62,8 @@ const passwordCheck = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,16}$/;
     dispatch(__userSignUp(obj))
   }
   useEffect(() => {
-    if(account !== undefined){
-    if(account.result === true){
+    
+    if(account.statusCode === 200){
       alert("회원가입이 완료되었습니다.")
       setJoin({
         email : "",
@@ -72,13 +71,8 @@ const passwordCheck = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,16}$/;
         password: "",
       })
         window.location.replace("/signin")
-    }else{
-      if(account.result !== undefined){
-        alert(account.error)
-      }
-     }
-  }
-  }, [account])
+    }
+  },[account])
 
   return (
 <SignupContainer>
@@ -99,7 +93,7 @@ const passwordCheck = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,16}$/;
             onChange={onChangeHandler}
           />
           <Input
-            placeholder='비밀번호'
+            placeholder='비밀번호 영어 숫자 포함 8자 이상'
             type='password'
             name='password'
             onChange={onChangeHandler}

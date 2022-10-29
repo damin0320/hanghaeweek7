@@ -8,13 +8,13 @@ import { useDispatch } from 'react-redux'
 import { colors } from '../theme/theme';
 import { __userLogout } from '../redux/modules/LoginSlice';
 import Header from "../components/Header"
+import { delCookie } from '../cookie/cookie'
 
 
 const Mypage = () => {
 
 const {account} = useSelector((state) => state.account)  
 const dispatch = useDispatch()
-console.log(account)
 
 useEffect(() => {
   dispatch(__userProfile())
@@ -22,6 +22,7 @@ useEffect(() => {
 
 const onLogoutHandler = () => {
   dispatch(__userLogout())
+  delCookie("Access_Token")
   alert("이용하시려면 다시 로그인 해주세요")
   window.location.replace("/signin")
 }

@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import {__userLogin} from "../redux/modules/LoginSlice"
 import instagram from "../images/instagram.png"
+import front from "../images/front.png"
 import { colors } from '../theme/theme';
 
 
@@ -38,10 +39,11 @@ const SignIn = () => {
     <div>
 <LoginContainer>
       <Wrap>
+      <LoginImg width={500} height={600} src={front} alt="예시 이미지" />
         <div>
           <LoginBox>
             <LogoBox>
-            <img width={200} height={60}src={instagram} alt="로고" />
+            <img width={200} height={60} src={instagram} alt="로고" />
             </LogoBox>
             <Input
               placeholder='사용자 이메일'
@@ -77,6 +79,15 @@ const SignIn = () => {
 }
 
 export default SignIn
+
+const LoginImg = styled.img`
+  width: 350px;
+  height: 536px;
+  margin-right: 30px;
+  img {
+    width: 100%;
+  }
+`;
 
 const LoginContainer = styled.div`
   display: flex;
