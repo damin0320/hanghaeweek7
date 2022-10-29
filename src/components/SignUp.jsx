@@ -188,12 +188,6 @@ const SignupText = styled.div`
   color: ${colors.text};
 `;
 
-const ErrorMsg = styled.p`
-  color: red;
-  font-size: 12px;
-  width: 250px;
-  word-break: keep-all;
-`;
 
 const LoginBox = styled.div`
   background-color: white;
