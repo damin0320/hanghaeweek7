@@ -70,8 +70,9 @@ export const __userProfile = createAsyncThunk(
   "account/userProfile",
   async (payload,thunkAPI) => {
     try {
-      const data = await axios.get("http://3.39.72.234:8080/api/account/myinfo")
-      return thunkAPI.fulfillWithValue(data.data)
+      const data = await axios.get("http://3.39.72.234:8080/api/account/myinfo", {headers : headers})
+      // get이지만 token 담아서 보내준다.(요청이 있어야 답이 온다.)
+      return thunkAPI.fulfillWithValue(data.data.data)
     } catch (error) {
       return thunkAPI.rejectWithValue(error)
     }
@@ -128,7 +129,8 @@ export const LoginSlice = createSlice({
     [__userProfile.fulfilled]: (state, action) => {
       state.isLoading = false; // 네트워크 요청이 끝났으니, false로 변경합니다.
       state.isSuccess = false;
-      state.account=action.payload; // 
+      state.account.push(action.payload); 
+      // 데이터에 필요한 값만 배열에 넣어준다.
       
     },
     [__userProfile.rejected]: (state, action) => {

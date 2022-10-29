@@ -13,7 +13,7 @@ import { delCookie } from '../cookie/cookie'
 
 const Mypage = () => {
 
-const {account} = useSelector((state) => state.account)  
+const {account} = useSelector((state) => state.account)
 const dispatch = useDispatch()
 
 useEffect(() => {
@@ -32,11 +32,14 @@ const onLogoutHandler = () => {
         <Header/>
     
     <div>
+      <ProfileBox>
       <img width={200} height={200} src={profile}></img>
-      <p>{account.nickname}</p>
-    <LogoutBox>
+      <h1>{account[0]}</h1>
+      </ProfileBox>
+     <LogoutBox>
     <span onClick={onLogoutHandler}>로그아웃</span>
     </LogoutBox>
+      {/* 값이 두개가 들어와서 이렇게 함 */}
     </div>
     </>
   )
@@ -44,12 +47,23 @@ const onLogoutHandler = () => {
 
 export default Mypage
 
+const ProfileBox = styled.div`
+position:relative;
+h1{
+  text-align: center;
+  position:absolute;
+  top : 30px;
+  left: 350px;
+}
+`
+
 const LogoutBox = styled.div`
   background-color: white;
   width: 100px;
   padding: 20px;
   border: 1px solid ${colors.border};
-  margin-top: 10px;
+  margin-top: 50px;
+  margin-left: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
