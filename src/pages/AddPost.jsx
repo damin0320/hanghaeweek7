@@ -1,8 +1,11 @@
 import React from 'react'
-
+import Form from "../components/Form"
 const AddPost = () => {
   return (
-    <div>AddPost</div>
+    <>
+      <div>AddPost</div>
+      <Form/>
+    </>
   )
 }
 

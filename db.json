@@ -1,0 +1,36 @@
+{
+  "posts": [
+    {
+      "id": 2,
+      "content": "456789"
+    },
+    {
+      "id": 4,
+      "content": "asfdasfdasfd"
+    },
+    {
+      "id": 5,
+      "content": "asdfasd"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "commentId": "1",
+      "comment": "아녕하세요!"
+    },
+    {
+      "id": 2,
+      "commentId": "1",
+      "comment": "asfasdf"
+    },
+    {
+      "id": 3,
+      "commentId": "2",
+      "comment": "446561212389"
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}
