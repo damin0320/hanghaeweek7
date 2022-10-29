@@ -1,0 +1,8 @@
+.head{
+  overflow: hidden;
+}
+.homeBox {
+  display: flex;
+  gap: 30px;
+  margin-right : 80px
+}
