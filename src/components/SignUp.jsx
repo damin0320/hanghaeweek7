@@ -36,33 +36,6 @@ const useremailCheck = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 const usernicknameCheck = /^[a-z]+[a-z0-9]{5,19}$/g;
 const passwordCheck = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,16}$/;
 
-// const onCheckEmail = () => {
-//   dispatch(__checkEmail(obj.useremail))
-// }
-
-// useEffect(() => {
-//   if(emailCheck !== undefined){
-//     if(emailCheck.success === true){
-//       return alert("사용 가능한 이메일입니다.")
-//     }else{
-//       return alert("이미 사용중인 이메일이 있습니다.")
-//     }
-//   }
-// }, [dispatch, emailCheck])
-// const onCheckname = () => {
-//   dispatch(__checkName(obj.nickname))
-// }
-// useEffect(() => {
-//   if(nameCheck !== undefined){
-//     if(nameCheck.success === true){
-//       return alert("사용 가능한 닉네임입니다.")
-//     }else{
-//       return alert("이미 사용중인 닉네임이 있습니다.")
-//     }
-//   }
-// }, [dispatch, nameCheck])
-
-
   const onSubmitHandler = (event) => {
     event.preventDefault()
     if(!useremailCheck.test(obj.email)){
@@ -244,3 +217,29 @@ const LoginBox = styled.div`
     cursor: pointer;
   }
 `;
+
+// const onCheckEmail = () => {
+//   dispatch(__checkEmail(obj.useremail))
+// }
+
+// useEffect(() => {
+//   if(emailCheck !== undefined){
+//     if(emailCheck.success === true){
+//       return alert("사용 가능한 이메일입니다.")
+//     }else{
+//       return alert("이미 사용중인 이메일이 있습니다.")
+//     }
+//   }
+// }, [dispatch, emailCheck])
+// const onCheckname = () => {
+//   dispatch(__checkName(obj.nickname))
+// }
+// useEffect(() => {
+//   if(nameCheck !== undefined){
+//     if(nameCheck.success === true){
+//       return alert("사용 가능한 닉네임입니다.")
+//     }else{
+//       return alert("이미 사용중인 닉네임이 있습니다.")
+//     }
+//   }
+// }, [dispatch, nameCheck])

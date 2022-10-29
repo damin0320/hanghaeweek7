@@ -5,7 +5,6 @@ import home from "../images/home.png"
 import plus from "../images/plus.png"
 import profile from "../images/profile.jpeg"
 import { useNavigate } from 'react-router-dom'
-import {useDispatch} from "react-redux"
 
 
 const Header = () => {
@@ -41,12 +40,6 @@ display: flex;
 justify-content: space-evenly;
 width: 100%;
 `
-
-const LogoBox = styled.img`
-
-  margin-top: 25px;
-  margin-bottom: 12px;
-`;
 
 const HomeBox = styled.div`
   width: 120px;

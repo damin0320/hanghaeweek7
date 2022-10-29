@@ -85,15 +85,6 @@ const LoginContainer = styled.div`
   height: 100vh;
 `;
 
-const LoginImg = styled.img`
-  width: 350px;
-  height: 536px;
-  margin-right: 30px;
-  img {
-    width: 100%;
-  }
-`;
-
 const Wrap = styled.div`
   display: flex;
 `;
@@ -171,11 +162,4 @@ const SignupButton = styled.button`
   background: none;
   font-weight: bold;
   color: ${colors.primary};
-`;
-
-const ErrorMsg = styled.p`
-  color: red;
-  font-size: 12px;
-  width: 250px;
-  word-break: keep-all;
 `;
