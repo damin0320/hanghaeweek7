@@ -7,12 +7,14 @@ import {__userProfile} from "../redux/modules/LoginSlice"
 import { useDispatch } from 'react-redux'
 import { colors } from '../theme/theme';
 import { __userLogout } from '../redux/modules/LoginSlice';
+import Header from "../components/Header"
 
 
 const Mypage = () => {
 
 const {account} = useSelector((state) => state.account)  
 const dispatch = useDispatch()
+console.log(account)
 
 useEffect(() => {
   dispatch(__userProfile())
@@ -25,6 +27,9 @@ const onLogoutHandler = () => {
 }
 
   return (
+    <>
+        <Header/>
+    
     <div>
       <img width={200} height={200} src={profile}></img>
       <p>{account.nickname}</p>
@@ -32,6 +37,7 @@ const onLogoutHandler = () => {
     <span onClick={onLogoutHandler}>로그아웃</span>
     </LogoutBox>
     </div>
+    </>
   )
 }
 

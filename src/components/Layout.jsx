@@ -10,7 +10,7 @@ const Layout = ({ children }) => {
 export default Layout
 
 const StLayout = styled.div`
-  max-width: 1200px;
+  max-width: 1000px;
   min-width: 800px;
   margin: 0 auto;
 `;

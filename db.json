@@ -16,6 +16,7 @@
   "account": {
     "id": 1,
     "userid": "damin0320@nate.com",
+    "nickname" : "damin123",
     "password": "abcd1234"
   }
 }

@@ -44,6 +44,7 @@ export const __userLogin = createAsyncThunk(
 export const __userLogout = createAsyncThunk(
   "account/userLogout",
   async(payload, thunkAPI) => {
+    console.log(payload)
     try {
       await axios.delete(`${SERVICE_URL}/logout`, {headers : headers})
       delCookie("Access_Token")
@@ -129,7 +130,9 @@ export const LoginSlice = createSlice({
     [__userProfile.fulfilled]: (state, action) => {
       state.isLoading = false; // 네트워크 요청이 끝났으니, false로 변경합니다.
       state.isSuccess = false;
+      console.log(action.payload)
       state.account=action.payload; // 
+      
     },
     [__userProfile.rejected]: (state, action) => {
       state.isLoading = false; // 에러가 발생했지만, 네트워크 요청이 끝났으니, false로 변경합니다.
@@ -140,7 +143,7 @@ export const LoginSlice = createSlice({
 })
 
 // 액션크리에이터는 컴포넌트에서 사용하기 위해 export 하고
-export const { userLogin, userSignUp, userSignUpGet } = LoginSlice.actions;
+export const { userLogin, userSignUp, userSignUpGet, userProfile } = LoginSlice.actions;
 // reducer 는 configStore에 등록하기 위해 export default 합니다.
 export default LoginSlice.reducer;
 
