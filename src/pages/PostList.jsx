@@ -1,9 +1,12 @@
 
+
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector  } from "react-redux";
 import {__getPost} from "../redux/modules/PostsSlice";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import Header from "../components/Header"
+
 
 const PostList = () => {
 
@@ -19,7 +22,9 @@ const PostList = () => {
         }, [dispatch]);
 
   return (
+
     <>  
+    <Header/>
     {
       posts.length > 0 &&
         (
@@ -47,8 +52,6 @@ const PostList = () => {
           </>
         )
     }
-
-    </>
   )
 }
 
