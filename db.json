@@ -1,22 +1,17 @@
 {
   "posts": [
-    {
-      "id": 1,
-      "title": "json-server",
-      "author": "typicode"
-    }
+
   ],
   "comments": [
     {
       "id": 1,
-      "body": "some comment",
-      "postId": 1
-    }
   ],
+  
   "account": {
     "id": 1,
     "userid": "damin0320@nate.com",
     "nickname" : "damin123",
     "password": "abcd1234"
+
   }
 }
