@@ -41,7 +41,6 @@ export const __getPost = createAsyncThunk(
       try {
         const data = await axios.get("http://3.39.72.234:8080/api/feed/show", 
         );
-        //console.log(data);
         return thunkAPI.fulfillWithValue(data.data.feeds);
       } catch (error) {
         return thunkAPI.rejectWithValue(error);
@@ -73,10 +72,8 @@ export const __getPost = createAsyncThunk(
     "posts/__getPost",
     async (payload, thunkAPI) => {
       try {
-        //console.log(payload)
         const data = await axios.get(`http://3.39.72.234:8080/api/feed/show/${payload}`, 
         );
-        console.log(data.data);
         return thunkAPI.fulfillWithValue(data.data);
       } catch (error) {
         return thunkAPI.rejectWithValue(error);
@@ -89,7 +86,6 @@ export const __getPost = createAsyncThunk(
   export const __editPost = createAsyncThunk(
     "posts/__editPost",
     async (payload, thunkAPI) => {
-      console.log("payload",payload)
       try {
         const data = await axios.patch(`http://3.39.72.234:8080/api/feed/${payload.id}`, payload.formData, {
           headers: {
@@ -99,7 +95,6 @@ export const __getPost = createAsyncThunk(
             "Cache-Control": "no-cache",
           },
         });
-        console.log(data.data);
         return thunkAPI.fulfillWithValue(data.data);
       } catch (error) {
         return thunkAPI.rejectWithValue(error);
@@ -108,14 +103,10 @@ export const __getPost = createAsyncThunk(
   );  
 
 
-
-
-
 export const __addComment = createAsyncThunk(
   "comments/__addComment",
   async (payload, thunkAPI) => {
     try {
-      //console.log(payload);
       const data = await axios.post(
         `http://3.39.72.234:8080/api/feed/${payload.id}/comment`,{comment : payload.comment},{
           headers: {
@@ -126,7 +117,6 @@ export const __addComment = createAsyncThunk(
           },
         }
       );
-      //console.log(data.data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -138,7 +128,6 @@ export const __deleteComment = createAsyncThunk(
   "comments/__deleteComment",
   async (payload, thunkAPI) => {
     try {
-      //console.log(payload);
       const data = await axios.delete(
         `http://3.39.72.234:8080/api/feed/comment/${payload}`,{
           headers: {
@@ -194,7 +183,6 @@ const PostsSlice = createSlice({
       },
       [__deletePost.fulfilled]: (state, action) => {
         state.isLoading = false;
-        console.log(action.payload);
         state.posts = state.posts.filter((post) => post.id !== action.payload);
       },
       [__deletePost.rejected]: (state, action) => {
@@ -208,7 +196,6 @@ const PostsSlice = createSlice({
       },
       [__editPost.fulfilled]: (state, action) => {
         state.isLoading = false;
-        console.log(action.payload.content);
         state.posts.content = action.payload.content; 
       },
       [__editPost.rejected]: (state, action) => {
