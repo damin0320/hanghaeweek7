@@ -16,10 +16,10 @@ const PostList = () => {
   const navigate = useNavigate();
   
   //get 해오기
+  // 와칭해주는게 지켜보다가 변경이 되면 리렌더링(삭제도 됨)
     useEffect(() => {
       dispatch(__getPost());
-
-        }, [dispatch]);
+        }, [ posts.length]);
 
   return (
 
@@ -52,8 +52,9 @@ const PostList = () => {
           </>
         )
     }
+    </>
   )
-}
+  }
 
 export default PostList
 

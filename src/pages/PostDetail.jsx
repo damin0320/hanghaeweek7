@@ -34,7 +34,6 @@ const PostDetail = () => {
    };
 
   const onClickUdapte = () => {
-    console.log(input.content);
 
     const formData = new FormData();
     formData.append("content", input.content);
