@@ -15,7 +15,7 @@ export const __addPost = createAsyncThunk(
           .post(`http://3.39.72.234:8080/api/feed`, payload, {
             headers: {
               enctype: "multipart/form-data",
-              Access_Token: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLsp4DrgpgyIiwiZXhwIjoxNjY3MjY4MDc1LCJpYXQiOjE2NjcxODE2NzV9.vrryl31o6iGfntDHspVycmEoaphf7yAtPMl4rACbqX4",
+              Access_Token: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYW1pbjEyMzRAbmF2ZXIuY29tIiwiZXhwIjoxNjY3Mjk4MjU2LCJpYXQiOjE2NjcyMTE4NTZ9.6XsWkiSJBkNd_kwD4AIjLuBmos5uMAm07LmcUmo_QY8",
               // RefreshToken: refreshToken, 생략 예정
               "Cache-Control": "no-cache",
             },
@@ -56,7 +56,7 @@ export const __getPost = createAsyncThunk(
         const data = await axios.delete(
           `http://3.39.72.234:8080/api/feed/${payload}`,  {
             headers: {
-              Access_Token: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLsp4DrgpgyIiwiZXhwIjoxNjY3MjY4MDc1LCJpYXQiOjE2NjcxODE2NzV9.vrryl31o6iGfntDHspVycmEoaphf7yAtPMl4rACbqX4",
+              Access_Token: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYW1pbjEyMzRAbmF2ZXIuY29tIiwiZXhwIjoxNjY3Mjk4MjU2LCJpYXQiOjE2NjcyMTE4NTZ9.6XsWkiSJBkNd_kwD4AIjLuBmos5uMAm07LmcUmo_QY8",
               // RefreshToken: refreshToken, 생략 예정
               "Cache-Control": "no-cache",
             },
@@ -84,13 +84,22 @@ export const __getPost = createAsyncThunk(
     }
   );
 
+// 수정 삭제 => 나중에하기
+
   export const __editPost = createAsyncThunk(
     "posts/__editPost",
     async (payload, thunkAPI) => {
       console.log("payload",payload)
       try {
-        const data = await axios.patch(`http://3.39.72.234:8080/${payload.id}`, {content:payload.target});
-        // const data = await axios.get("http://localhost:3001/comment");
+        const data = await axios.patch(`http://3.39.72.234:8080/api/feed/${payload.id}`, payload.formData, {
+          headers: {
+            enctype: "multipart/form-data",
+            Access_Token: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYW1pbjEyMzRAbmF2ZXIuY29tIiwiZXhwIjoxNjY3Mjk4MjU2LCJpYXQiOjE2NjcyMTE4NTZ9.6XsWkiSJBkNd_kwD4AIjLuBmos5uMAm07LmcUmo_QY8",
+            // RefreshToken: refreshToken, 생략 예정
+            "Cache-Control": "no-cache",
+          },
+        });
+        console.log(data.data);
         return thunkAPI.fulfillWithValue(data.data);
       } catch (error) {
         return thunkAPI.rejectWithValue(error);
@@ -98,7 +107,8 @@ export const __getPost = createAsyncThunk(
     }
   );  
 
-// 수정 삭제 => 나중에하기
+
+
 
 
 export const __addComment = createAsyncThunk(
@@ -110,7 +120,7 @@ export const __addComment = createAsyncThunk(
         `http://3.39.72.234:8080/api/feed/${payload.id}/comment`,{comment : payload.comment},{
           headers: {
             "Content-Type": `application/json`,
-            Access_Token: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLsp4DrgpgyIiwiZXhwIjoxNjY3MjY4MDc1LCJpYXQiOjE2NjcxODE2NzV9.vrryl31o6iGfntDHspVycmEoaphf7yAtPMl4rACbqX4",
+            Access_Token: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYW1pbjEyMzRAbmF2ZXIuY29tIiwiZXhwIjoxNjY3Mjk4MjU2LCJpYXQiOjE2NjcyMTE4NTZ9.6XsWkiSJBkNd_kwD4AIjLuBmos5uMAm07LmcUmo_QY8",
             // RefreshToken: refreshToken, 생략 예정
             "Cache-Control": "no-cache",
           },
@@ -133,7 +143,7 @@ export const __deleteComment = createAsyncThunk(
         `http://3.39.72.234:8080/api/feed/comment/${payload}`,{
           headers: {
             "Content-Type": `application/json`,
-            Access_Token: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiLsp4DrgpgyIiwiZXhwIjoxNjY3MjY4MDc1LCJpYXQiOjE2NjcxODE2NzV9.vrryl31o6iGfntDHspVycmEoaphf7yAtPMl4rACbqX4",
+            Access_Token: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYW1pbjEyMzRAbmF2ZXIuY29tIiwiZXhwIjoxNjY3Mjk4MjU2LCJpYXQiOjE2NjcyMTE4NTZ9.6XsWkiSJBkNd_kwD4AIjLuBmos5uMAm07LmcUmo_QY8",
             // RefreshToken: refreshToken, 생략 예정
             "Cache-Control": "no-cache",
           },
@@ -198,7 +208,8 @@ const PostsSlice = createSlice({
       },
       [__editPost.fulfilled]: (state, action) => {
         state.isLoading = false;
-        state.melon = action.payload; 
+        console.log(action.payload.content);
+        state.posts.content = action.payload.content; 
       },
       [__editPost.rejected]: (state, action) => {
         state.isLoading = false;
