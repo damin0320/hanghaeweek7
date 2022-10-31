@@ -23,6 +23,7 @@ useEffect(() => {
 const onLogoutHandler = () => {
   dispatch(__userLogout())
   delCookie("Access_Token")
+  delCookie("nickname")
   alert("이용하시려면 다시 로그인 해주세요")
   window.location.replace("/signin")
 }
