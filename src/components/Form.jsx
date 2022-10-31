@@ -3,8 +3,7 @@ import styled from "styled-components";
 import AddImage from "../components/elements/addImage.svg";
 import { useDispatch, useSelector  } from "react-redux";
 import {__addPost, __getPost} from "../redux/modules/PostsSlice";
-//나중에 제거할 것
-import Img from "../components/elements/Billie Eilish.jpg"
+
 
 const Form = () => {
 
@@ -48,12 +47,6 @@ const Form = () => {
     };
     }
 
-    //json server에서 사진을 보낼 수 없어서 그냥 id와 content만 보낸다
-    // const onSubmit = () => {
-    //   dispatch(__addPost({id:post.length+1, content : content}))
-    // }
-
-  //3. content, image 업로드 onClick(formdata로 보낼 수 없어서 주석처리)
   const onSubmit = (e) => {
 
     const formData = new FormData();
@@ -65,12 +58,10 @@ const Form = () => {
     // for (var pair of formData.entries()) {
     //   console.log(pair[0] + ", " + pair[1]);
     // }
-    // console.log(imgFile);
-    // console.log(post.content);
+
     if (!content) {
       return alert("내용을 입력해주세요");
     }
-   // window.location.replace("/");
   };
   
 
@@ -115,15 +106,9 @@ const Form = () => {
            
           </STFormBox>
         ):("")}
+ 
+            </div>
 
-        <div>
-
-        
-        </div>
-    </div>
-
-
-    
   )
 }
 
