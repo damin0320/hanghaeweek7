@@ -82,7 +82,7 @@ const PostDetail = () => {
           {edit ? (
 
             <div>
-              <button onClick={()=> onClickUdapte(input)}>수정완료</button><br/>
+              <STDetailButton3  onClick={()=> onClickUdapte(input)}>수정완료</STDetailButton3 ><br/>
               <img src={posts.img}
                       style={{
                         width: "400px",
@@ -129,7 +129,8 @@ const PostDetail = () => {
                         <STDetailComment key={index}>
                           <div>
                             <STDetailNickname>{post.nickname}</STDetailNickname>
-                            {post.comment}
+                            {post.comment} 
+                            {post.createdAt}
                           </div>
                           <STDetailButton2 onClick={()=> onDeleteButton(post.commentid)} >삭제하기</STDetailButton2 >
                         </STDetailComment>
