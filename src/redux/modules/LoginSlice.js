@@ -32,9 +32,9 @@ export const __userLogin = createAsyncThunk(
       }
       return thunkAPI.fulfillWithValue(payload)
     } catch (error) {
-      if (400 < error.data.status && error.data.status < 500) {
+      if (error.response.data.status === 500) {
         window.location.reload();
-        alert("로그인 실패")
+        alert("로그인 정보를 다시 확인해주세요")
       }
       return thunkAPI.rejectWithValue(error);
     }
@@ -72,6 +72,7 @@ export const __userProfile = createAsyncThunk(
     try {
       const data = await axios.get("http://3.39.72.234:8080/api/account/myinfo", {headers : headers})
       // get이지만 token 담아서 보내준다.(요청이 있어야 답이 온다.)
+      setCookie("nickname", data.data.data)
       return thunkAPI.fulfillWithValue(data.data.data)
     } catch (error) {
       return thunkAPI.rejectWithValue(error)
