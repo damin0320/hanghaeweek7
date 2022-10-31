@@ -66,44 +66,47 @@ const Form = () => {
   
 
 
-  
-
   return (
     <div method="post" id="add" encType="multipart/form-data">
         <button onClick={showModal}>모달 띄우기</button>
         {modalOpen? (
           <STFormBox>
-          <STFormBox2 onClick={showModal}>이전</STFormBox2>
-          <span>새 게시물 만들기</span>
-          <button type="submit" form="add" onClick={()=>{onSubmit(); showModal();}}>입력하기</button>
-          <div>
-            <label htmlFor="imgFile">
-              <img
-                    src={imageUrl ? imageUrl : AddImage}
-                    style={{
-                      marginBottom: "24px",
-                      width: "464px",
-                      height: "301px",
-                    }}
-                  />
-                  <input
-                    style={{ display: "none" }}
-                    type="file"
-                    id="imgFile"
-                    onChange={onChangeImage}
-                    accept="image/*"
-                    ref={imgRef}
-                    name="imgFile"
-                    multiple
-                  />
-              </label>
-          </div>
-          <div>본인 아이디 </div>
-          <input 
-          onChange={contentHandler} 
-          type="text" placeholder='문구 입력...' 
-          name="content"></input>
-           
+            <STFormBox2>
+              <STFormBox3>
+              <STFormButton onClick={showModal}>이전</STFormButton>
+              <span>새 게시물 만들기</span>  
+              <div>본인 아이디 </div>
+              <STFormButton2 type="submit" form="add" onClick={()=>{onSubmit(); showModal();}}>입력하기</STFormButton2>
+                <STFormBox4 >
+                  <div><br/>
+                    <label htmlFor="imgFile">
+                      <img
+                            src={imageUrl ? imageUrl : AddImage}
+                            style={{
+                              marginBottom: "24px",
+                              width: "300px",
+                              height: "300px",
+                            }}
+                          />
+                          <input
+                            style={{ display: "none" }}
+                            type="file"
+                            id="imgFile"
+                            onChange={onChangeImage}
+                            accept="image/*"
+                            ref={imgRef}
+                            name="imgFile"
+                            multiple
+                          />
+                      </label>
+                  </div>
+                  <STFormTextarea
+                  onChange={contentHandler} 
+                  type="text" placeholder='문구 입력...' 
+                  name="content"></STFormTextarea>
+                </STFormBox4 >
+              </STFormBox3>
+            </STFormBox2>
           </STFormBox>
         ):("")}
  
@@ -116,8 +119,8 @@ export default Form
 
 const STFormBox = styled.div`
   //모달창 크기
-  width: 800px;
-  height: 800px;
+  width: 100%;
+  height: 100%;
   //최상단
   z-index: 999;
   //중앙배치
@@ -126,16 +129,75 @@ const STFormBox = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   //모달창 디자인
-  background-color: gray;
-  border: 1px solid black;
-  border-radius: 8px;
+  background-color: rgba(196, 196, 196, 0.6);
+  /* border: 1px solid black; */
+  /* border-radius: 8px; */
+  
+`
+const STFormBox2 = styled.div`
+  /* padding: 20px 20px 28px 20px; */
+  display: block;
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
 `
 
-const STFormBox2 = styled.button`
+const STFormBox3 = styled.div`
+  width: 600px;
+  height: 600px;
+  background-color: #f1f1f1;
+  border-radius: 14px;
+  background-color: #fff !important;
+  margin : auto;
+  margin-bottom: 400px;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+`
+const STFormBox4 = styled.div`
+  display: flex;
+  flex-direction: row;
+`
+
+const STFormButton = styled.button`
   //이전 버튼
+  position: absolute;
+  left : 10px;
+  top: 10px;
+  background-color:#0095f6;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  width: 100px;
+  height: 30px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  &:disabled {
+  background-color: #b2dffc;}
+`
+
+const STFormButton2 = styled.button`
+  //입력하기 버튼
   position: absolute;
   right: 10px;
   top: 10px;
-
+  background-color: #0095f6;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  width: 100px;
+  height: 30px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  &:disabled {
+  background-color: #b2dffc;}
 `
 
+const STFormTextarea = styled.textarea`
+  margin-left: 20px;
+`
