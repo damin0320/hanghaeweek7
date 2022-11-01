@@ -45,11 +45,7 @@ useEffect(() => {
   return (
     <>
         <Header/>
-    {
-      feeds.length > 0 && (
-        <>
-    <div>
-      <ProfileBox>
+        <ProfileBox>
       <img width={200} height={200} src={profile}></img>
       <h1>{detail.nickname}</h1>
       {/* 값이 두개가 들어와서 이렇게 함 */}
@@ -58,6 +54,10 @@ useEffect(() => {
     <span onClick={onLogoutHandler}>로그아웃</span>
     </LogoutBox>
     <Hr/>
+    {
+      feeds.length > 0 && (
+        <>
+    <div>
     {feeds.map((feed) => {
       return (
         <div key={feed.id}>
