@@ -1,8 +1,8 @@
 
 
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector  } from "react-redux";
-import {__getPost} from "../redux/modules/PostsSlice";
+import {__getPost, __like} from "../redux/modules/PostsSlice";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Header from "../components/Header"
@@ -32,15 +32,15 @@ const PostList = () => {
             {
               posts.map((post, index) => {
                 return (
-                  <div key={index}  onClick={() => {navigate(`/PostDetail/${post.id}`);}}>
+                  <div key={index}>
                     <ListContainer>
                         <div>
                           <ListContent>
                             {post.nickname}<br/>
                             <img src={post.img}
                             style={{ width: "400px", height: "400px"}}
-                            /><br/>
-                            <button>좋아요</button><br/>
+                            onClick={() => {navigate(`/PostDetail/${post.id}`);}}/><br/>
+                            <LikeButton>❤️</LikeButton><Span>0</Span><br/>
                             내용 : {post.content}<br/>
                           </ListContent>
                         </div>
@@ -70,4 +70,17 @@ const ListContent = styled.div`
   width : 400px;
   height: 550px;
   margin-bottom: 10px;
+`
+
+const LikeButton = styled.button`
+border: 0 solid transparent;
+color : white;
+font-size: 40px;
+padding: 10px;
+cursor: pointer;
+`
+
+const Span = styled.span`
+font-size: 40px;
+padding: 10px;
 `
