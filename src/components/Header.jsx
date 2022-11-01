@@ -9,7 +9,7 @@ import "./header.css"
 import AddImage from "../components/elements/addImage.svg";
 import { useDispatch, useSelector  } from "react-redux";
 import {__addPost, __getPost} from "../redux/modules/PostsSlice";
-import { __userProfile } from '../redux/modules/LoginSlice'
+import { __userFeed } from '../redux/modules/LoginSlice'
 
 const Header = () => {
   const navigate = useNavigate();
@@ -82,7 +82,7 @@ const Header = () => {
   const {account} = useSelector((state) => state.account)
 
   useEffect(() => {
-    dispatch(__userProfile())
+    dispatch(__userFeed())
   }, [dispatch])
   
 

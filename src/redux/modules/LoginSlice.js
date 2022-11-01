@@ -5,6 +5,8 @@ import { getCookie ,setCookie, delCookie } from "../../cookie/cookie";
 
 const initialState = {
   account : [],
+  detail : {},
+  feeds : [],
   isLoading : false,
   error : null
 };
@@ -23,7 +25,7 @@ export const __userLogin = createAsyncThunk(
   // login : reducer name, 경로 정해줘야
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.post("http://3.39.72.234:8080/api/account/login", payload);
+      const data = await axios.post("http://3.35.11.171:8080/api/account/login", payload);
       const Access_Token = data.headers.access_token;
       if (data.status === 200 || data.status === 201) {
         setCookie("Access_Token", Access_Token);
@@ -32,9 +34,9 @@ export const __userLogin = createAsyncThunk(
       }
       return thunkAPI.fulfillWithValue(payload)
     } catch (error) {
-      if (400 < error.data.status && error.data.status < 500) {
+      if (error.response.data.status === 500) {
         window.location.reload();
-        alert("로그인 실패")
+        alert("로그인 정보를 다시 확인해주세요")
       }
       return thunkAPI.rejectWithValue(error);
     }
@@ -45,7 +47,7 @@ export const __userLogout = createAsyncThunk(
   "account/userLogout",
   async(payload, thunkAPI) => {
     try {
-      await axios.delete("http://3.39.72.234:8080/api/account/logout", {headers : headers})
+      await axios.delete("http://3.35.11.171:8080/api/account/logout", {headers : headers})
       return thunkAPI.fulfillWithValue(payload)
     }catch(error){
       return thunkAPI.rejectWithValue(error);
@@ -57,7 +59,7 @@ export const  __userSignUp = createAsyncThunk(
   "account/userSignUp",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.post("http://3.39.72.234:8080/api/account/signup", payload)
+      const data = await axios.post("http://3.35.11.171:8080/api/account/signup", payload)
       return thunkAPI.fulfillWithValue(data.data)
     } catch (error) {
       return thunkAPI.rejectWithValue(error)
@@ -66,13 +68,12 @@ export const  __userSignUp = createAsyncThunk(
 )
 
 
-export const __userProfile = createAsyncThunk(
+export const __userFeed = createAsyncThunk(
   "account/userProfile",
   async (payload,thunkAPI) => {
     try {
-      const data = await axios.get("http://3.39.72.234:8080/api/account/myinfo", {headers : headers})
-      // get이지만 token 담아서 보내준다.(요청이 있어야 답이 온다.)
-      return thunkAPI.fulfillWithValue(data.data.data)
+      const data = await axios.get("http://3.35.11.171:8080/api/account/mypost", {headers : headers})
+      return thunkAPI.fulfillWithValue(data.data)
     } catch (error) {
       return thunkAPI.rejectWithValue(error)
     }
@@ -123,17 +124,23 @@ export const LoginSlice = createSlice({
       state.isSuccess = false;
       state.error = action.payload; // catch 된 error 객체를 state.error에 넣습니다.
     },
-    [__userProfile.pending]: (state) => {
+    
+    [__userFeed.pending]: (state) => {
       state.isLoading = true; // 네트워크 요청이 시작되면 로딩상태를 true로 변경합니다.
     },
-    [__userProfile.fulfilled]: (state, action) => {
+    [__userFeed.fulfilled]: (state, action) => {
+
       state.isLoading = false; // 네트워크 요청이 끝났으니, false로 변경합니다.
       state.isSuccess = false;
-      state.account.push(action.payload); 
+      if(action.payload.data.statusCode === 200){
+        state.feeds = action.payload.data.feeds;
+        state.detail = action.payload.data
+      }
+
       // 데이터에 필요한 값만 배열에 넣어준다.
       
     },
-    [__userProfile.rejected]: (state, action) => {
+    [__userFeed.rejected]: (state, action) => {
       state.isLoading = false; // 에러가 발생했지만, 네트워크 요청이 끝났으니, false로 변경합니다.
       state.isSuccess = false;
       state.error = action.payload; // catch 된 error 객체를 state.error에 넣습니다.
@@ -142,7 +149,7 @@ export const LoginSlice = createSlice({
 })
 
 // 액션크리에이터는 컴포넌트에서 사용하기 위해 export 하고
-export const { userLogin, userSignUp, userSignUpGet, userProfile } = LoginSlice.actions;
+export const { userLogin, userSignUp, userSignUpGet} = LoginSlice.actions;
 // reducer 는 configStore에 등록하기 위해 export default 합니다.
 export default LoginSlice.reducer;
 
@@ -195,6 +202,35 @@ export default LoginSlice.reducer;
     //   state.nameCheck=action.payload;
     // },
     // [__checkName.rejected]: (state, action) => {
+    //   state.isLoading = false; // 에러가 발생했지만, 네트워크 요청이 끝났으니, false로 변경합니다.
+    //   state.isSuccess = false;
+    //   state.error = action.payload; // catch 된 error 객체를 state.error에 넣습니다.
+    // },
+
+    // export const __userProfile = createAsyncThunk(
+//   "account/userProfile",
+//   async (payload,thunkAPI) => {
+//     try {
+//       const data = await axios.get("http://3.35.11.171:8080/api/account/myinfo", {headers : headers})
+//       // get이지만 token 담아서 보내준다.(요청이 있어야 답이 온다.)
+//       setCookie("nickname", data.data.data)
+//       return thunkAPI.fulfillWithValue(data.data.data)
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue(error)
+//     }
+//   }
+// )
+// [__userProfile.pending]: (state) => {
+    //   state.isLoading = true; // 네트워크 요청이 시작되면 로딩상태를 true로 변경합니다.
+    // },
+    // [__userProfile.fulfilled]: (state, action) => {
+    //   state.isLoading = false; // 네트워크 요청이 끝났으니, false로 변경합니다.
+    //   state.isSuccess = false;
+    //   state.account.push(action.payload); 
+    //   // 데이터에 필요한 값만 배열에 넣어준다.
+      
+    // },
+    // [__userProfile.rejected]: (state, action) => {
     //   state.isLoading = false; // 에러가 발생했지만, 네트워크 요청이 끝났으니, false로 변경합니다.
     //   state.isSuccess = false;
     //   state.error = action.payload; // catch 된 error 객체를 state.error에 넣습니다.
