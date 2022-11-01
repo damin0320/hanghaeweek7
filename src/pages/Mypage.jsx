@@ -3,23 +3,26 @@ import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import profile from "../images/profile.jpeg"
 // img tag 이용
-import {__userProfile} from "../redux/modules/LoginSlice"
+// import {__userProfile} from "../redux/modules/LoginSlice"
 import { useDispatch } from 'react-redux'
 import { colors } from '../theme/theme';
 import { __userLogout } from '../redux/modules/LoginSlice';
 import Header from "../components/Header"
 import { delCookie } from '../cookie/cookie'
+import {__userFeed} from "../redux/modules/LoginSlice";
 
 
 const Mypage = () => {
-
-const {account} = useSelector((state) => state.account)
+const {detail, feeds} = useSelector((state) => state.account)
 const dispatch = useDispatch()
 
-useEffect(() => {
-  dispatch(__userProfile())
-}, [dispatch])
+// 유저 닉네임 받아오기
+// useEffect(() => {
+//   dispatch(__userProfile())
+// }, [dispatch])
 
+
+// 로그아웃
 const onLogoutHandler = () => {
   dispatch(__userLogout())
   delCookie("Access_Token")
@@ -28,20 +31,47 @@ const onLogoutHandler = () => {
   window.location.replace("/signin")
 }
 
+// 마이페이지 본인이 올린 사진 받아오기
+useEffect(() => {
+  dispatch(__userFeed());
+    }, []);
+
+useEffect(() => {
+}, [detail])
+
+useEffect(() => {
+}, [feeds])
+
   return (
     <>
         <Header/>
-    
+    {
+      feeds.length > 0 && (
+        <>
     <div>
       <ProfileBox>
       <img width={200} height={200} src={profile}></img>
-      <h1>{account[0]}</h1>
+      <h1>{detail.nickname}</h1>
+      {/* 값이 두개가 들어와서 이렇게 함 */}
       </ProfileBox>
      <LogoutBox>
     <span onClick={onLogoutHandler}>로그아웃</span>
     </LogoutBox>
-      {/* 값이 두개가 들어와서 이렇게 함 */}
+    <Hr/>
+    {feeds.map((feed) => {
+      return (
+        <div key={feed.id}>
+      <Img>
+        <img style={{ width: "300px", height: "300px"}} src={feed.img}/>
+      </Img>
     </div>
+      )
+    })}
+    
+    
+  </div>
+    
+    </>)}
     </>
   )
 }
@@ -75,3 +105,14 @@ const LogoutBox = styled.div`
     cursor: pointer;
   }
   `;
+
+  const Hr = styled.hr`
+  width: 95%;
+  margin-top: 15px;
+  `
+
+  const Img = styled.div`
+  float : left;
+  flex-direction: row;
+  padding : 30px;
+  `
