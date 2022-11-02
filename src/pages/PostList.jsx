@@ -49,16 +49,16 @@ const onLike = (id) => {
                                 return(
                                   <div key={imgs.id}>
                                     <img src={imgs}
-                                     style={{ width: "200px", height: "200px"}}
-                                     onClick={() => {navigate(`/PostDetail/${post.id}`)}}/>
+                                     style={{ width: "200px", height: "200px"}}/>
                                   </div>
                                 )
                               })
                             }
                             
-                            <LikeButton onClick={()=>onLike(post.id)}>{post.like_state ? "❤️" : "♡"}</LikeButton>
-                            <Span>{post.like_count}</Span><br/>
-                            내용 : {post.content}<br/>
+                            <LikeButton onClick={()=>onLike(post.id)}>{post.like_state ? "❤️" : "🤍"}</LikeButton>
+                            <Span>{post.like_count}</Span>
+                            <Span onClick={() => {navigate(`/PostDetail/${post.id}`)}}>💬</Span><br/>
+                            {post.content}<br/>
                           </ListContent>
                         </div>
                     </ListContainer>
@@ -93,12 +93,12 @@ const LikeButton = styled.button`
 border: 0 solid transparent;
 background-color: transparent;
 color : gray;
-font-size: 40px;
+font-size: 20px;
 padding: 10px;
 cursor: pointer;
 `
 
 const Span = styled.span`
-font-size: 40px;
-padding: 10px;
+font-size: 20px;
+padding: 5px;
 `
