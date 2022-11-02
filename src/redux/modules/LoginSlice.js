@@ -26,10 +26,11 @@ export const __userLogin = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await axios.post("http://3.39.72.234:8080/api/account/login", payload);
-      console.log(data)
       const Access_Token = data.headers.access_token;
+      const nickname = data.data.data
       if (data.status === 200 || data.status === 201) {
         setCookie("Access_Token", Access_Token);
+        setCookie("nickname", nickname)
         alert("로그인 성공");
         window.location.replace("/")
       }

@@ -3,7 +3,7 @@ import { useParams, useNavigate  } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import {__getPost2, __deletePost, __editPost, __addComment, __deleteComment} from "../redux/modules/PostsSlice";
 import styled from "styled-components";
-import { getCookie, setCookie } from '../cookie/cookie';
+import { getCookie } from '../cookie/cookie';
 import Header from "../components/Header"
 
 const PostDetail = () => {
