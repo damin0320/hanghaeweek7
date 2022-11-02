@@ -3,11 +3,10 @@ import { useParams, useNavigate  } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import {__getPost2, __deletePost, __editPost, __addComment, __deleteComment} from "../redux/modules/PostsSlice";
 import styled from "styled-components";
-import { getCookie } from '../cookie/cookie';
+import { getCookie, setCookie } from '../cookie/cookie';
 import Header from "../components/Header"
 
 const PostDetail = () => {
-  
   const checkCookie = {
     'nickname' : getCookie('nickname')
   }
@@ -84,6 +83,12 @@ const PostDetail = () => {
         <STDetailContainer2>
         <STDetailContainer3>
         <div>
+          {
+            posts.nickname !== undefined &&
+          (
+            <>
+
+
           {edit ? (
 
             <div>
@@ -128,6 +133,7 @@ const PostDetail = () => {
                     <STDetailContent>{posts.content}</STDetailContent>
               </div>
               )}
+        </>)}      
         </div>
 
         {/*댓글 부분 */}
