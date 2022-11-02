@@ -12,6 +12,11 @@ import {__addPost, __getPost} from "../redux/modules/PostsSlice";
 import imageCompression from "browser-image-compression";
 import { __userFeed } from '../redux/modules/LoginSlice'
 
+//slick 
+import Slider from "react-slick"
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 
 const Header = () => {
   const navigate = useNavigate();
@@ -118,6 +123,15 @@ const Header = () => {
   }, [dispatch])
 
 
+    //slick 부분
+    const settings = {
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1
+    };
+
   return (
     <Head className="head">
       <div>
@@ -144,21 +158,6 @@ const Header = () => {
                     <div><br/>
                       <label htmlFor="imgFile">
                         <button onClick={()=> { imgRef.current.click()}}> 업로드 버튼</button>
-                       
-                        {/*image map 돌리기 */}
-                         {
-                          imgUrl.map((img) => {
-                            return (
-                              <div key={img.id}>
-                                <img src={img ? img : AddImage} style={{
-                                width: "300px",
-                                height: "300px",
-                              }} />
-                              </div>
-                              )
-                            })
-                          } 
-  
                             <input
                               style={{ display: "none" }}
                               type="file"
@@ -177,6 +176,20 @@ const Header = () => {
                   </STFormBox4 >
                 </STFormBox3>
               </STFormBox2>
+                <Slider {...settings}>
+                          {
+                            imgUrl.map((img) => {
+                              return (
+                                <div key={img.id}>
+                                  <img src={img ? img : AddImage} style={{
+                                  width: "300px",
+                                  height: "300px",
+                                }} />
+                                </div>
+                                )
+                              })
+                            } 
+                  </Slider>
             </STFormBox>
           ):("")}
   

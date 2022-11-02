@@ -8,6 +8,10 @@ import styled from "styled-components";
 import Header from "../components/Header"
 import profile from "../images/profile.jpeg"
 
+//slick 
+import Slider from "react-slick"
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const PostList = () => {
 
@@ -23,6 +27,15 @@ const PostList = () => {
 const onLike = (id) => {
   dispatch(__like(id))
 }
+
+  //slick 부분
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1
+  };
 
   return (
 
@@ -42,17 +55,20 @@ const onLike = (id) => {
 
                             <img width={30} height={30}src={profile} alt="로고"/>
                             {post.nickname} - {post.createdAt}
-                            
-                            {
-                              post.img.map((imgs)=> {
-                                return(
-                                  <div key={imgs.id}>
-                                    <img src={imgs}
-                                     style={{ width: "200px", height: "200px"}}/>
-                                  </div>
-                                )
-                              })
-                            }
+                           
+                            <Slider {...settings}>
+                              {
+                                post.img.map((imgs)=> {
+                                  return(
+                                    <div key={imgs.id}>
+                                      <img src={imgs}
+                                      style={{ width: "400px", height: "400px"}}/>
+                                    </div>
+                                  )
+                                })
+                              }
+                            </Slider>
+                        
                             
                             <LikeButton onClick={()=>onLike(post.id)}>{post.like_state ? "❤️" : "🤍"}</LikeButton>
                             <Span>{post.like_count}</Span>
