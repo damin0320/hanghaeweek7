@@ -53,8 +53,8 @@ const onLike = (id) => {
                         <div>
                           <ListContent>
 
-                            <img width={30} height={30}src={profile} alt="로고"/>
-                            {post.nickname} - {post.createdAt}
+                            <img width={30} height={30}src={profile} alt="프로필"/>
+                            <Nickname>{post.nickname}</Nickname> 
                            
                             <Slider {...settings}>
                               {
@@ -68,12 +68,11 @@ const onLike = (id) => {
                                 })
                               }
                             </Slider>
-                        
-                            
+                                   
                             <LikeButton onClick={()=>onLike(post.id)}>{post.like_state ? "❤️" : "🤍"}</LikeButton>
                             <Span>{post.like_count}</Span>
                             <Span onClick={() => {navigate(`/PostDetail/${post.id}`)}}>💬</Span><br/>
-                            {post.content}<br/>
+                            {post.content} - <Time>{post.createdAt}</Time><br/>
                           </ListContent>
                         </div>
                     </ListContainer>
@@ -93,6 +92,7 @@ export default PostList
 const ListContainer = styled.div`
 margin-right: 32px;
 min-width: 468px;
+margin-bottom: 20px;
 `;
 
 const ListContent = styled.div`
@@ -116,4 +116,14 @@ cursor: pointer;
 const Span = styled.span`
 font-size: 20px;
 padding: 5px;
+cursor: pointer;
+`
+
+const Nickname = styled.span`
+font-size: 20px;
+padding: 20px;
+`
+
+const Time = styled.span`
+  color : gray;
 `

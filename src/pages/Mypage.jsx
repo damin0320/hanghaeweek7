@@ -49,7 +49,7 @@ useEffect(() => {
     <>
       <Header/>
         <ProfileBox>
-          <img width={200} height={200} src={profile}></img>
+          <img width={200} height={200} src={profile} alt="프로필"></img>
           <h1>{detail.nickname}</h1>
           {/* 값이 두개가 들어와서 이렇게 함 */}
         </ProfileBox>
