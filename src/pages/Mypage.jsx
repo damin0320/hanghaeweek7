@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import profile from "../images/profile.jpeg"
+import { useNavigate } from 'react-router-dom';
 // img tag 이용
 // import {__userProfile} from "../redux/modules/LoginSlice"
 import { useDispatch } from 'react-redux'
@@ -13,8 +14,10 @@ import {__userFeed} from "../redux/modules/LoginSlice";
 
 
 const Mypage = () => {
+
 const {detail, feeds} = useSelector((state) => state.account)
 const dispatch = useDispatch()
+const navigate = useNavigate();
 
 // 유저 닉네임 받아오기
 // useEffect(() => {
@@ -44,34 +47,35 @@ useEffect(() => {
 
   return (
     <>
-        <Header/>
+      <Header/>
         <ProfileBox>
-      <img width={200} height={200} src={profile}></img>
-      <h1>{detail.nickname}</h1>
-      {/* 값이 두개가 들어와서 이렇게 함 */}
-      </ProfileBox>
-     <LogoutBox>
-    <span onClick={onLogoutHandler}>로그아웃</span>
-    </LogoutBox>
+          <img width={200} height={200} src={profile}></img>
+          <h1>{detail.nickname}</h1>
+          {/* 값이 두개가 들어와서 이렇게 함 */}
+        </ProfileBox>
+      <LogoutBox>
+        <span onClick={onLogoutHandler}>로그아웃</span>
+      </LogoutBox>
+
     <Hr/>
-    {
-      feeds.length > 0 && (
-        <>
-    <div>
-    {feeds.map((feed) => {
-      return (
-        <div key={feed.id}>
-      <Img>
-        <img style={{ width: "300px", height: "300px"}} src={feed.img}/>
-      </Img>
-    </div>
-      )
-    })}
-    
-    
-  </div>
-    
-    </>)}
+        {
+          feeds.length > 0 && (
+            <>
+              <div>
+                  {feeds.map((feed) => {
+                    return (
+                      <div key={feed.id}>
+                        <Img>
+                          <img style={{ width: "300px", height: "300px"}} src={feed.img[0]}
+                          onClick={() => {navigate(`/PostDetail/${feed.id}`)}}/>
+                        </Img>
+                      </div>
+                    )
+                  })}
+              </div>
+           </>
+          )
+        }
     </>
   )
 }

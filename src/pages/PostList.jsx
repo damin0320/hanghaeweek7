@@ -34,9 +34,9 @@ const onLike = (id) => {
         (
           <>
             {
-              posts.map((post, index) => {
+              posts.map((post) => {
                 return (
-                  <div key={index}>
+                  <div key={post.id}>
                     <ListContainer>
                         <div>
                           <ListContent>
@@ -50,14 +50,14 @@ const onLike = (id) => {
                                   <div key={imgs.id}>
                                     <img src={imgs}
                                      style={{ width: "200px", height: "200px"}}
-                                     onClick={() => {navigate(`/PostDetail/${post.id}`)/>
+                                     onClick={() => {navigate(`/PostDetail/${post.id}`)}}/>
                                   </div>
                                 )
                               })
                             }
-                            <br/>
-                            <LikeButton onClick={()=>onLike(post.id)}>{post.like_state ? "❤️" : "♡"}</LikeButton><Span>{post.like_count}</Span><br/>
-
+                            
+                            <LikeButton onClick={()=>onLike(post.id)}>{post.like_state ? "❤️" : "♡"}</LikeButton>
+                            <Span>{post.like_count}</Span><br/>
                             내용 : {post.content}<br/>
                           </ListContent>
                         </div>
