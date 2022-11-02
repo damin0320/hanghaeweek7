@@ -105,8 +105,7 @@ cursor: pointer;
 `
 
 const Nickname = styled.span`
-font-size: 25px;
-font-weight: bold;
+font-size: 20px;
 padding: 20px;
 `
 
