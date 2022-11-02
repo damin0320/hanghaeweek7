@@ -82,27 +82,25 @@ const PostDetail = () => {
 
 
   //slick 부분
-    const settings = {
-      dots: true,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 1,
-      slidesToScroll: 1
-    };
-    
+  const settings = {
+ 
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1
+  };
   return (
     <>
     <Header/>
       <div>
-        <STDetailContainer>
-        <STDetailContainer2>
+      <STDetailContainer>
+       <STDetailContainer2>
         <STDetailContainer3>
         <div>
           {
             posts.nickname !== undefined &&
           (
             <>
-
 
           {edit ? (
 
@@ -126,38 +124,25 @@ const PostDetail = () => {
 
                     {checkCookie.nickname === posts.nickname ?(<STDetailButton3 onClick={()=>{toggleEdit()}}>수정하기</STDetailButton3>) : ""}<br/>
 
-
-
-
                     <Nickname>{posts.nickname}</Nickname><br/>
-          
-                    <Slider {...settings}>
-                           
-
                             {
-
                               posts.img && (
                                 <>
+                                 <StyledSlider {...settings}>
                                   {
                                     posts.img.map((imgs)=> {
                                       return(
                                         <div key={imgs.id}>
                                           <img src={imgs}
-
-
                                           style={{ width: "320px", height: "320px"}}/>
-
                                         </div>
                                       )
                                     })
                                   }
+                                  </StyledSlider>
                                 </>
                               )
                             }
-                    </Slider>
-                        
-                            
-                  
                     <br/>
                     <STDetailContent>{posts.content} - <Time>{posts.createdAt}</Time></STDetailContent>
               </div>
@@ -167,34 +152,34 @@ const PostDetail = () => {
 
         {/*댓글 부분 */}
 
-        <div>
-              <Textarea type="text" 
-                placeholder='댓글을 입력하세요'
-                value={Input2.comment || ""}
-                name="comment"
-                onChange={onChangeInputHandler}></Textarea>
-              <STDetailButton4 onClick={onClickComment}> 추가하기</STDetailButton4>
-              {posts.comments !== undefined &&
-              (
-                <>
-                  {
-                    posts.comments.map((post, index)=>{
-                      return (
-                        <STDetailComment key={index}>
-                          <div>
-                            <STDetailNickname>{post.nickname}</STDetailNickname>
-                            {post.comment} 
-                            - <Time>{post.createdAt}</Time>
-                          </div>
-                          {checkCookie.nickname === posts.nickname ?(<STDetailButton2 onClick={()=> onDeleteButton(post.commentid)} >삭제하기</STDetailButton2>) : ""}
-                        </STDetailComment>
-                      )
-                    })
-                  }
-                </>
-              )
-            }
-            </div>
+            <STComment>
+                <Textarea type="text" 
+                  placeholder='댓글을 입력하세요'
+                  value={Input2.comment || ""}
+                  name="comment"
+                  onChange={onChangeInputHandler}></Textarea>
+                <STDetailButton4 onClick={onClickComment}> 추가하기</STDetailButton4>
+                {posts.comments !== undefined &&
+                (
+                  <>
+                    {
+                      posts.comments.map((post, index)=>{
+                        return (
+                          <STDetailComment key={index}>
+                            <div>
+                              <STDetailNickname>{post.nickname}</STDetailNickname>
+                              {post.comment} 
+                              - <Time>{post.createdAt}</Time>
+                            </div>
+                            {checkCookie.nickname === posts.nickname ?(<STDetailButton2 onClick={()=> onDeleteButton(post.commentid)} >삭제하기</STDetailButton2>) : ""}
+                          </STDetailComment>
+                        )
+                      })
+                    }
+                  </>
+                )
+              }
+            </STComment>
             </STDetailContainer3>
             </STDetailContainer2>
           </STDetailContainer>
@@ -210,7 +195,7 @@ export default PostDetail
 const STDetailContainer = styled.div`
   //모달창 크기
   width: 100%;
-  height: 80%;
+  height: 100%;
   //최상단
   z-index: 999;
   //중앙배치
@@ -243,14 +228,13 @@ const STDetailContainer3 = styled.div`
   justify-content: center;
   align-items: center;
  
-  display: flex;
-  flex-direction: column;
+  //display: flex;
+  //flex-direction: column;
   position: relative;
 `
 
 const STDetailComment = styled.div`
   display: flex;
-  margin-top: 15px;
 
   .div{
     float :left;
@@ -260,7 +244,8 @@ const STDetailNickname = styled.b`
   margin-right: 15px;
 `
 const STDetailContent = styled.div`
-  margin-bottom : 15px;
+  top: 50px;
+
 `
 
 const STDetailButton = styled.button`
@@ -346,8 +331,9 @@ border: 1px solid gray;
 `
 
 const Nickname = styled.span`
-font-size: 25px;
+font-size: 20px;
 font-weight: bold;
+margin-left: 150px;
 `
 
 const Time = styled.span`
@@ -359,4 +345,31 @@ height: 50px;
 border-radius: 20px;
 padding: 15px;
 border: none;
+z-index: 999;
+`
+
+const StyledSlider = styled(Slider)`
+
+   //position: absolute;
+    top:50%;
+    //display: block;
+    width:600px;
+    height: 380px;
+    cursor: pointer;
+    
+    color : transparent;
+    //border : 1px solid black;
+    outline: 1px solid black;
+    background: black;
+    //z-index: 2;
+    
+   div{
+    margin-top: 10px;
+    margin-left: 20px;
+   }
+`;
+
+const STComment = styled.div`
+  padding: 15px;
+  margin-top: 100px;
 `

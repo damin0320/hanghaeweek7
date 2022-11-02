@@ -125,9 +125,9 @@ const Header = () => {
 
     //slick 부분
     const settings = {
-      dots: true,
       infinite: true,
-      speed: 500,
+      //speed: 500,
+      dots : false,
       slidesToShow: 1,
       slidesToScroll: 1
     };
@@ -149,15 +149,18 @@ const Header = () => {
             <STFormBox>
               <STFormBox2>
                 <STFormBox3>
-                <STFormButton onClick={showModal}>이전</STFormButton>
                 <span>새 게시물 만들기</span>  
-
-                {/* 내용 들어갈 곳 <h4>{account[0]} </h4> */}
-                <STFormButton2 type="submit" form="add" onClick={()=>{onSubmit(); showModal();}}>입력하기</STFormButton2>
+                  <STButtons>
+                    <STFormButton onClick={showModal}>이전</STFormButton>
+                    
+                    <STFormButton3 onClick={()=> { imgRef.current.click()}}> 업로드 버튼</STFormButton3>
+                    {/* 내용 들어갈 곳 <h4>{account[0]} </h4> */}
+                    <STFormButton2 type="submit" form="add" onClick={()=>{onSubmit(); showModal();}}>입력하기</STFormButton2>
+                  </STButtons>
                   <STFormBox4 >
                     <div><br/>
                       <label htmlFor="imgFile">
-                        <button onClick={()=> { imgRef.current.click()}}> 업로드 버튼</button>
+                        
 
                             <input
                               style={{ display: "none" }}
@@ -167,29 +170,28 @@ const Header = () => {
                               accept="image/*"
                               ref={imgRef}
                               name="imgFile"/>
-                              <Slider {...settings}>
+
+                              <StyledSlider {...settings}>
                                     {
                                       imgUrl.map((img) => {
                                         return (
                                           <div key={img.id}>
-                                            <img src={img ? img : AddImage} style={{
-                                            width: "300px",
-                                            height: "300px",
-                                          }} />
+                                            <img src={img ? img : AddImage}  style={{height: "250px", width : "250px"}}/>
                                           </div>
                                           )
                                         })
                                       } 
-                            </Slider>
+                            </StyledSlider>
+                            
 
                         </label>
                     </div>
-                    <STFormTextarea
+                   </STFormBox4 >
+                   <STFormTextarea
                     onChange={contentHandler} 
                     type="text" placeholder='문구 입력...' 
                     name="content"></STFormTextarea>
-                  </STFormBox4 >
-                </STFormBox3>
+               </STFormBox3>
               </STFormBox2>
                 
             </STFormBox>
@@ -246,29 +248,30 @@ const STFormBox = styled.div`
 const STFormBox2 = styled.div`
   /* padding: 20px 20px 28px 20px; */
   display: block;
-  position: absolute;
-  bottom: 0px;
+  //position: absolute;
   width: 100%;
 `
 
 const STFormBox3 = styled.div`
   width: 600px;
-  height: 600px;
+  height: 800px;
   background-color: #f1f1f1;
   border-radius: 14px;
   background-color: #fff !important;
   margin : auto;
-  margin-bottom: 400px;
+  //margin-bottom: 400px;
   justify-content: center;
   align-items: center;
   align-self: center;
-  display: flex;
-  flex-direction: column;
+ // display: flex;
+  //flex-direction: column;
   position: relative;
 `
 const STFormBox4 = styled.div`
-  display: flex;
-  flex-direction: row;
+  //height : 60px;
+  //background-color: red;
+  //display: flex;
+  //flex-direction: row;
 `
 
 const STFormButton = styled.button`
@@ -307,7 +310,61 @@ const STFormButton2 = styled.button`
   background-color: #b2dffc;}
 `
 
-const STFormTextarea = styled.textarea`
-  margin-left: 20px;
+
+const STFormButton3 = styled.button`
+  //입력하기 버튼
+  position: absolute;
+  right:250px;
+  top: 10px;
+  background-color: #0095f6;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  width: 100px;
+  height: 30px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  &:disabled {
+  background-color: #b2dffc;}
 `
 
+const STFormTextarea = styled.textarea`
+  margin-top:580px;
+  margin-left: 30px;
+  z-index: 999;
+  width:500px;
+  height: 100px;
+  border : 1px solid gray;
+  border-radius: 5px;
+  padding : 5px;
+
+`
+
+
+const StyledSlider = styled(Slider)`
+
+   //position: absolute;
+    //top:50%;
+    //display: block;
+    width:400x;
+    height: 0px;
+    cursor: pointer;
+    
+    color : transparent;
+    //border : 1px solid black;
+    //outline: 1px solid black;
+
+    //z-index: 2;
+    
+   div{
+    margin-top: 10px;
+    margin-left: 20px;
+   }
+  
+`;
+
+const STButtons = styled.div`
+  justify-content: space-between;
+
+`
