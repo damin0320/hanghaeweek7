@@ -95,11 +95,12 @@ const PostDetail = () => {
               <STDetailButton3  onClick={()=> onClickUdapte(input)}>수정완료</STDetailButton3 ><br/>
               <img src={posts.img}
                       style={{
-                        width: "400px",
-                        height: "300px",
-                      }}/><br/>
-              <input type="text" name="content" 
-                  onChange={onChangeHandler} alt="업로드 이미지"/>
+                        width: "320px",
+                        height: "320px",
+                      }} alt="업로드 이미지"/><br/>
+              <Input type="text" name="content" 
+                  onChange={onChangeHandler} placeholder="수정할 내용을 입력해주세요"/>
+              <STcancelButton  onClick={()=>{toggleEdit()}}>취소</STcancelButton ><br/>
             </div>
           
               ) : ( 
@@ -301,6 +302,21 @@ const STDetailButton4 = styled.button`
   &:disabled {
   background-color: #b2dffc;}
 `
+
+const Input = styled.input`
+width: 200px;
+background-color: transparent;
+border-radius: 10px;
+border: 1px solid gray;
+`
+
+const STcancelButton = styled.button`
+color : red;
+background-color: transparent;
+border-radius: 10px;
+border: 1px solid gray;
+`
+
 const Nickname = styled.span`
 font-size: 25px;
 font-weight: bold;
