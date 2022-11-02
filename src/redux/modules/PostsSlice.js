@@ -139,6 +139,7 @@ export const __deleteComment = createAsyncThunk(
         }
       );
       return thunkAPI.fulfillWithValue(payload);
+
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }

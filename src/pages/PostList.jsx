@@ -18,6 +18,7 @@ const PostList = () => {
   //get 해오기
   // 와칭해주는게 지켜보다가 변경이 되면 리렌더링(삭제도 됨)
     useEffect(() => {
+
       dispatch(__getPost());
         }, [ posts.length]);
 
@@ -36,10 +37,19 @@ const PostList = () => {
                     <ListContainer>
                         <div>
                           <ListContent>
-                            {post.nickname}<br/>
-                            <img src={post.img}
-                            style={{ width: "400px", height: "400px"}}
-                            /><br/>
+                            {post.nickname} - {post.createdAt}
+                            
+                            {
+                              post.img.map((imgs)=> {
+                                return(
+                                  <div key={imgs.id}>
+                                    <img src={imgs}
+                                     style={{ width: "200px", height: "200px"}}/>
+                                  </div>
+                                )
+                              })
+                            }
+                            <br/>
                             <button>좋아요</button><br/>
                             내용 : {post.content}<br/>
                           </ListContent>

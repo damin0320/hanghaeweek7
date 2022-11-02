@@ -10,6 +10,7 @@ import AddImage from "../components/elements/addImage.svg";
 import { useDispatch, useSelector  } from "react-redux";
 import {__addPost, __getPost} from "../redux/modules/PostsSlice";
 import { __userProfile } from '../redux/modules/LoginSlice'
+import imageCompression from "browser-image-compression";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -44,47 +45,72 @@ const Header = () => {
   };
 
   //2. image 부분
-    //2-1 image onChange
 
-    const [imageUrl, setImageUrl] = useState(null);
-    const [imgFile, setImgFile] = useState("");
+    const [imgFile, setImgFile] = useState([]);
+    const [imgUrl, setImgUrl] = useState([]);
     const imgRef = useRef();
 
-    const onChangeImage = () => {
-      const reader = new FileReader();
-      const file = imgRef.current.files[0];
-      reader.readAsDataURL(file);
-      reader.onloadend = () => {
-      setImageUrl(reader.result);
-      setImgFile(file);
-    };
+    //2-1 image onChange
+    const onChangeImage = (e) => {
+      const files = e.currentTarget.files;
+
+      if ([...files].length > 3) {
+        alert('이미지는 최대 3개까지 업로드가 가능합니다.');
+        return;
+      }
+
+      //선택한 이미지 파일 반복문 돌리기
+      [...files].forEach(file => {
+
+        //이미지 압축 지정 
+        const options = {
+          maxSizeMB: 0.02,
+          maxWidthOrHeight: 220,
+          useWebWorker: true,
+        };
+
+        //압축 관련 내용
+        imageCompression(file, options)
+          .then((res) => {
+
+            //이미지를 담기 : type에서 "image/*"을 하면 나오지 X split을 이용
+            setImgFile(imgs => [...imgs, new File([res], res.name, { type: "image/" + res.name.split(".")[1] })]);
+            const reader = new FileReader(); 
+
+            reader.onload = () => {
+              setImgUrl(imgUrl => [...imgUrl, reader.result]);
+            };
+            reader.readAsDataURL(res); 
+          })
+          .catch((error) => {
+            console.log("파일 압축 실패", error);
+          })
+      });
+
     }
 
-  const onSubmit = (e) => {
+    //2-2 image onsubmit 부분
+    const onSubmit = () => {
 
-    const formData = new FormData();
-    formData.append("image", imgFile);
-    formData.append("content", post.content);
+      const formData = new FormData();
 
-    dispatch(__addPost(formData));
+      //폼 데이터에 각각 이미지 보내기
+      if (imgFile.length > 0) {
+        imgFile.forEach((file) => {
+          formData.append("image", file);
+        })
+      } else {
+        formData.append("image", null);
+      }
 
-    // for (var pair of formData.entries()) {
-    //   console.log(pair[0] + ", " + pair[1]);
-    // }
+      //폼 데이터에 글작성 데이터 넣기
+      formData.append("content", post.content);
 
-    if (!content) {
-      return alert("내용을 입력해주세요");
+      //Api 날리기
+      dispatch(__addPost(formData));
+      window.location.replace("/")
     }
-    window.location.replace("/")
-  };
-  
-  // 본인 아이디 
-  const {account} = useSelector((state) => state.account)
 
-  useEffect(() => {
-    dispatch(__userProfile())
-  }, [dispatch])
-  
 
   return (
     <Head className="head">
@@ -96,7 +122,8 @@ const Header = () => {
     <img width={30} height={30} src={home} alt="로고" onClick={handleGoToHome}/>
 
     <div method="post" id="add" encType="multipart/form-data">
-      <img width={30} height={30}src={plus} alt="로고" onClick={showModal}/>
+      <img width={30} height={30} src={plus} alt="로고" onClick={showModal}/>
+
           {/* <button >모달 띄우기</button> */}
           {modalOpen? (
             <STFormBox>
@@ -104,19 +131,28 @@ const Header = () => {
                 <STFormBox3>
                 <STFormButton onClick={showModal}>이전</STFormButton>
                 <span>새 게시물 만들기</span>  
-                <h4>{account[0]} </h4>
+
+                {/* 내용 들어갈 곳 <h4>{account[0]} </h4> */}
                 <STFormButton2 type="submit" form="add" onClick={()=>{onSubmit(); showModal();}}>입력하기</STFormButton2>
                   <STFormBox4 >
                     <div><br/>
                       <label htmlFor="imgFile">
-                        <img
-                              src={imageUrl ? imageUrl : AddImage}
-                              style={{
-                                marginBottom: "24px",
+                        <button onClick={()=> { imgRef.current.click()}}> 업로드 버튼</button>
+                       
+                        {/*image map 돌리기 */}
+                         {
+                          imgUrl.map((img) => {
+                            return (
+                              <div key={img.id}>
+                                <img src={img ? img : AddImage} style={{
                                 width: "300px",
                                 height: "300px",
-                              }}
-                            />
+                              }} />
+                              </div>
+                              )
+                            })
+                          } 
+  
                             <input
                               style={{ display: "none" }}
                               type="file"
@@ -124,9 +160,8 @@ const Header = () => {
                               onChange={onChangeImage}
                               accept="image/*"
                               ref={imgRef}
-                              name="imgFile"
-                              multiple
-                            />
+                              name="imgFile"/>
+                        
                         </label>
                     </div>
                     <STFormTextarea
@@ -149,7 +184,7 @@ const Header = () => {
   )
 }
 
-export default Header
+export default Header;
 
 const Head = styled.div`
 display: flex;

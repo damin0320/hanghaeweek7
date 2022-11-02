@@ -98,12 +98,25 @@ const PostDetail = () => {
                     navigate("/")}}>삭제하기</STDetailButton>
 
                     <STDetailButton3 onClick={()=>{toggleEdit()}}>수정하기</STDetailButton3><br/>
-                    {posts.nickname}<br/>
-                    <div><img src={posts.img}
-                            style={{
-                              width: "400px",
-                              height: "300px",
-                            }}/></div>
+                    {posts.nickname} - {posts.createdAt}<br/>
+                    <div>/</div>
+
+                            {
+                              posts.img && (
+                                <>
+                                  {
+                                    posts.img.map((imgs, index)=> {
+                                      return(
+                                        <div key={index}>
+                                          <img src={imgs}
+                                          style={{ width: "200px", height: "200px"}}/>
+                                        </div>
+                                      )
+                                    })
+                                  }
+                                </>
+                              )
+                            }
                     <br/>
                     <STDetailContent>{posts.content}</STDetailContent>
               </div>

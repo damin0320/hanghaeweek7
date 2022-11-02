@@ -70,7 +70,7 @@ export const __userProfile = createAsyncThunk(
   "account/userProfile",
   async (payload,thunkAPI) => {
     try {
-      const data = await axios.get("http://3.39.72.234:8080/api/account/myinfo", {headers : headers})
+      const data = await axios.get("http://3.39.72.234:8080/api/account/mypost", {headers : headers})
       // get이지만 token 담아서 보내준다.(요청이 있어야 답이 온다.)
       return thunkAPI.fulfillWithValue(data.data.data)
     } catch (error) {
