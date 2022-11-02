@@ -2,16 +2,16 @@
 
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector  } from "react-redux";
-import {__getPost} from "../redux/modules/PostsSlice";
+import {__getPost, __like} from "../redux/modules/PostsSlice";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Header from "../components/Header"
+import profile from "../images/profile.jpeg"
 
 
 const PostList = () => {
 
   const posts = useSelector((state) => state.posts.posts);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   
@@ -19,7 +19,10 @@ const PostList = () => {
   // 와칭해주는게 지켜보다가 변경이 되면 리렌더링(삭제도 됨)
     useEffect(() => {
       dispatch(__getPost());
-        }, [ posts.length]);
+        }, [posts.length]);
+const onLike = (id) => {
+  dispatch(__like(id))
+}
 
   return (
 
@@ -32,15 +35,16 @@ const PostList = () => {
             {
               posts.map((post, index) => {
                 return (
-                  <div key={index}  onClick={() => {navigate(`/PostDetail/${post.id}`);}}>
+                  <div key={index}>
                     <ListContainer>
                         <div>
                           <ListContent>
+                            <img width={30} height={30}src={profile} alt="로고"/>
                             {post.nickname}<br/>
                             <img src={post.img}
                             style={{ width: "400px", height: "400px"}}
-                            /><br/>
-                            <button>좋아요</button><br/>
+                            onClick={() => {navigate(`/PostDetail/${post.id}`);}}/><br/>
+                            <LikeButton onClick={()=>onLike(post.id)}>{post.like_state ? "❤️" : "♡"}</LikeButton><Span>{post.like_count}</Span><br/>
                             내용 : {post.content}<br/>
                           </ListContent>
                         </div>
@@ -70,4 +74,18 @@ const ListContent = styled.div`
   width : 400px;
   height: 550px;
   margin-bottom: 10px;
+`
+
+const LikeButton = styled.button`
+border: 0 solid transparent;
+background-color: transparent;
+color : gray;
+font-size: 40px;
+padding: 10px;
+cursor: pointer;
+`
+
+const Span = styled.span`
+font-size: 40px;
+padding: 10px;
 `

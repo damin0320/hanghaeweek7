@@ -25,7 +25,7 @@ export const __userLogin = createAsyncThunk(
   // login : reducer name, 경로 정해줘야
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.post("http://3.35.11.171:8080/api/account/login", payload);
+      const data = await axios.post("http://3.39.72.234:8080/api/account/login", payload);
       const Access_Token = data.headers.access_token;
       if (data.status === 200 || data.status === 201) {
         setCookie("Access_Token", Access_Token);
@@ -47,7 +47,7 @@ export const __userLogout = createAsyncThunk(
   "account/userLogout",
   async(payload, thunkAPI) => {
     try {
-      await axios.delete("http://3.35.11.171:8080/api/account/logout", {headers : headers})
+      await axios.delete("http://3.39.72.234:8080/api/account/logout", {headers : headers})
       return thunkAPI.fulfillWithValue(payload)
     }catch(error){
       return thunkAPI.rejectWithValue(error);
@@ -59,7 +59,7 @@ export const  __userSignUp = createAsyncThunk(
   "account/userSignUp",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.post("http://3.35.11.171:8080/api/account/signup", payload)
+      const data = await axios.post("http://3.39.72.234:8080/api/account/signup", payload)
       return thunkAPI.fulfillWithValue(data.data)
     } catch (error) {
       return thunkAPI.rejectWithValue(error)
@@ -72,7 +72,7 @@ export const __userFeed = createAsyncThunk(
   "account/userProfile",
   async (payload,thunkAPI) => {
     try {
-      const data = await axios.get("http://3.35.11.171:8080/api/account/mypost", {headers : headers})
+      const data = await axios.get("http://3.39.72.234:8080/api/account/mypost", {headers : headers})
       return thunkAPI.fulfillWithValue(data.data)
     } catch (error) {
       return thunkAPI.rejectWithValue(error)

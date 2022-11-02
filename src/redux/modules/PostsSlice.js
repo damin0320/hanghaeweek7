@@ -13,7 +13,7 @@ export const __addPost = createAsyncThunk(
     async (payload, thunkAPI) => {
       try {
         await axios
-          .post(`http://3.35.11.171:8080/api/feed`, payload, {
+          .post(`http://3.39.72.234:8080/api/feed`, payload, {
             headers: {
               enctype: "multipart/form-data",
               Access_Token: getCookie('Access_Token'),
@@ -40,7 +40,13 @@ export const __getPost = createAsyncThunk(
     "posts/__getPost",
     async (payload, thunkAPI) => {
       try {
-        const data = await axios.get("http://3.35.11.171:8080/api/feed/show", 
+        const data = await axios.get("http://3.39.72.234:8080/api/feed/show", {
+          headers: {
+            "Content-Type": `application/json`,
+            Access_Token: getCookie('Access_Token'),
+            "Cache-Control": "no-cache",
+          },
+        }
         );
         return thunkAPI.fulfillWithValue(data.data.feeds);
       } catch (error) {
@@ -54,7 +60,7 @@ export const __getPost = createAsyncThunk(
     async (payload, thunkAPI) => {
       try {
         const data = await axios.delete(
-          `http://3.35.11.171:8080/api/feed/${payload}`,  {
+          `http://3.39.72.234:8080/api/feed/${payload}`,  {
             headers: {
               Access_Token: getCookie('Access_Token'),
               // RefreshToken: refreshToken, 생략 예정
@@ -73,7 +79,13 @@ export const __getPost = createAsyncThunk(
     "posts/__getPost",
     async (payload, thunkAPI) => {
       try {
-        const data = await axios.get(`http://3.35.11.171:8080/api/feed/show/${payload}`, 
+        const data = await axios.get(`http://3.39.72.234:8080/api/feed/show/${payload}`, {
+          headers: {
+            "Content-Type": `application/json`,
+            Access_Token: getCookie('Access_Token'),
+            "Cache-Control": "no-cache",
+          },
+        } 
         );
         return thunkAPI.fulfillWithValue(data.data);
       } catch (error) {
@@ -87,7 +99,7 @@ export const __getPost = createAsyncThunk(
     "posts/__editPost",
     async (payload, thunkAPI) => {
       try {
-        const data = await axios.patch(`http://3.35.11.171:8080/api/feed/${payload.id}`, payload.formData, {
+        const data = await axios.patch(`http://3.39.72.234:8080/api/feed/${payload.id}`, payload.formData, {
           headers: {
             enctype: "multipart/form-data",
             Access_Token: getCookie('Access_Token'),
@@ -108,7 +120,7 @@ export const __addComment = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await axios.post(
-        `http://3.35.11.171:8080/api/feed/${payload.id}/comment`,{comment : payload.comment},{
+        `http://3.39.72.234:8080/api/feed/${payload.id}/comment`,{comment : payload.comment},{
           headers: {
             "Content-Type": `application/json`,
             Access_Token: getCookie('Access_Token'),
@@ -129,7 +141,7 @@ export const __deleteComment = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await axios.delete(
-        `http://3.35.11.171:8080/api/feed/comment/${payload}`,{
+        `http://3.39.72.234:8080/api/feed/comment/${payload}`,{
           headers: {
             "Content-Type": `application/json`,
             Access_Token: getCookie('Access_Token'),
@@ -145,6 +157,23 @@ export const __deleteComment = createAsyncThunk(
   }
 );
 
+export const __like = createAsyncThunk(
+  "posts/like",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await axios.post(`http://3.39.72.234:8080/api/like/${payload}`, "", {
+        headers: {
+          "Content-Type": `application/json`,
+          Access_Token: getCookie('Access_Token'),
+          "Cache-Control": "no-cache",
+        },
+      })
+      return thunkAPI.fulfillWithValue(data.data)
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+)
 
 const PostsSlice = createSlice({
     name : "posts",
@@ -226,6 +255,19 @@ const PostsSlice = createSlice({
             (comment) => comment.commentid!== action.payload);
       },
       [__deleteComment.rejected]: (state, action) => {
+          state.isLoading = false;
+          state.error = action.payload;
+      },
+
+      //__like
+      [__like.pending]: (state) => {
+        state.isLoading = true;
+      },
+      [__like.fulfilled]: (state, action) => {
+          state.isLoading = false;
+          state.posts = action.payload;
+      },
+      [__like.rejected]: (state, action) => {
           state.isLoading = false;
           state.error = action.payload;
       },
