@@ -40,7 +40,13 @@ export const __getPost = createAsyncThunk(
     "posts/__getPost",
     async (payload, thunkAPI) => {
       try {
-        const data = await axios.get("http://3.39.72.234:8080/api/feed/show", 
+        const data = await axios.get("http://3.39.72.234:8080/api/feed/show", {
+          headers: {
+            "Content-Type": `application/json`,
+            Access_Token: getCookie('Access_Token'),
+            "Cache-Control": "no-cache",
+          },
+        }
         );
         return thunkAPI.fulfillWithValue(data.data.feeds);
       } catch (error) {
@@ -73,7 +79,13 @@ export const __getPost = createAsyncThunk(
     "posts/__getPost",
     async (payload, thunkAPI) => {
       try {
-        const data = await axios.get(`http://3.39.72.234:8080/api/feed/show/${payload}`, 
+        const data = await axios.get(`http://3.39.72.234:8080/api/feed/show/${payload}`, {
+          headers: {
+            "Content-Type": `application/json`,
+            Access_Token: getCookie('Access_Token'),
+            "Cache-Control": "no-cache",
+          },
+        } 
         );
         return thunkAPI.fulfillWithValue(data.data);
       } catch (error) {
@@ -146,6 +158,23 @@ export const __deleteComment = createAsyncThunk(
   }
 );
 
+export const __like = createAsyncThunk(
+  "posts/like",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await axios.post(`http://3.39.72.234:8080/api/like/${payload}`, "", {
+        headers: {
+          "Content-Type": `application/json`,
+          Access_Token: getCookie('Access_Token'),
+          "Cache-Control": "no-cache",
+        },
+      })
+      return thunkAPI.fulfillWithValue(data.data)
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+)
 
 const PostsSlice = createSlice({
     name : "posts",
@@ -227,6 +256,19 @@ const PostsSlice = createSlice({
             (comment) => comment.commentid!== action.payload);
       },
       [__deleteComment.rejected]: (state, action) => {
+          state.isLoading = false;
+          state.error = action.payload;
+      },
+
+      //__like
+      [__like.pending]: (state) => {
+        state.isLoading = true;
+      },
+      [__like.fulfilled]: (state, action) => {
+          state.isLoading = false;
+          state.posts = action.payload;
+      },
+      [__like.rejected]: (state, action) => {
           state.isLoading = false;
           state.error = action.payload;
       },

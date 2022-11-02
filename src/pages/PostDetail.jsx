@@ -3,9 +3,14 @@ import { useParams, useNavigate  } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import {__getPost2, __deletePost, __editPost, __addComment, __deleteComment} from "../redux/modules/PostsSlice";
 import styled from "styled-components";
+import { getCookie } from '../cookie/cookie';
+import Header from "../components/Header"
 
 const PostDetail = () => {
   
+  const checkCookie = {
+    'nickname' : getCookie('nickname')
+  }
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.posts.posts);
@@ -73,6 +78,7 @@ const PostDetail = () => {
 
   return (
     <>
+    <Header/>
       <div>
         <STDetailContainer>
         <STDetailContainer2>
@@ -91,13 +97,13 @@ const PostDetail = () => {
                   onChange={onChangeHandler}/>
             </div>
           
-              ) : (
+              ) : ( 
                 <div>
-                    <STDetailButton onClick={()=> 
+                    {checkCookie.nickname === posts.nickname ?(<STDetailButton onClick={()=> 
                     {onPostDelete(posts.id)
-                    navigate("/")}}>삭제하기</STDetailButton>
+                    navigate("/")}}>삭제하기</STDetailButton>) : ""}
 
-                    <STDetailButton3 onClick={()=>{toggleEdit()}}>수정하기</STDetailButton3><br/>
+                    {checkCookie.nickname === posts.nickname ?(<STDetailButton3 onClick={()=>{toggleEdit()}}>수정하기</STDetailButton3>) : ""}<br/>
                     {posts.nickname} - {posts.createdAt}<br/>
                     <div>/</div>
 
@@ -117,6 +123,7 @@ const PostDetail = () => {
                                 </>
                               )
                             }
+
                     <br/>
                     <STDetailContent>{posts.content}</STDetailContent>
               </div>
@@ -144,7 +151,7 @@ const PostDetail = () => {
                             {post.comment} 
                             {post.createdAt}
                           </div>
-                          <STDetailButton2 onClick={()=> onDeleteButton(post.commentid)} >삭제하기</STDetailButton2 >
+                          {checkCookie.nickname === posts.nickname ?(<STDetailButton2 onClick={()=> onDeleteButton(post.commentid)} >삭제하기</STDetailButton2>) : ""}
                         </STDetailComment>
                       )
                     })
@@ -168,7 +175,7 @@ export default PostDetail
 const STDetailContainer = styled.div`
   //모달창 크기
   width: 100%;
-  height: 100%;
+  height: 80%;
   //최상단
   z-index: 999;
   //중앙배치
@@ -186,7 +193,7 @@ const STDetailContainer2 = styled.div`
   /* padding: 20px 20px 28px 20px; */
   display: block;
   position: absolute;
-  bottom: 0px;
+  top: 50px;
   width: 100%;
 `
 
