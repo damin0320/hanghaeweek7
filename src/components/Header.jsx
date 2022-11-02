@@ -125,10 +125,10 @@ const Header = () => {
     </div>
     <IconBox>
     <HomeBox className="homeBox">
-    <img width={30} height={30} src={home} alt="로고" onClick={handleGoToHome}/>
+    <img width={30} height={30} src={home} alt="홈" onClick={handleGoToHome}/>
 
     <div method="post" id="add" encType="multipart/form-data">
-      <img width={30} height={30} src={plus} alt="로고" onClick={showModal}/>
+      <img width={30} height={30} src={plus} alt="추가하기" onClick={showModal}/>
 
           {/* <button >모달 띄우기</button> */}
           {modalOpen? (
@@ -153,7 +153,7 @@ const Header = () => {
                                 <img src={img ? img : AddImage} style={{
                                 width: "300px",
                                 height: "300px",
-                              }} />
+                              }} alt="이미지 추가하기"/>
                               </div>
                               )
                             })
@@ -182,7 +182,7 @@ const Header = () => {
   
         </div>
 
-    <img width={30} height={30}src={profile} alt="로고" onClick={handleGoToProfile}/>
+    <img width={30} height={30}src={profile} alt="프로필" onClick={handleGoToProfile}/>
 
     </HomeBox>
     </IconBox>
