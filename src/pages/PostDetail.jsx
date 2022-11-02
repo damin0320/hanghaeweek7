@@ -132,7 +132,7 @@ const PostDetail = () => {
                     <Nickname>{posts.nickname}</Nickname><br/>
           
                     <Slider {...settings}>
-                           {
+                           
 
                             {
 

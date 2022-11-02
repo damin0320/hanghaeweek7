@@ -167,7 +167,21 @@ const Header = () => {
                               accept="image/*"
                               ref={imgRef}
                               name="imgFile"/>
-                        
+                              <Slider {...settings}>
+                                    {
+                                      imgUrl.map((img) => {
+                                        return (
+                                          <div key={img.id}>
+                                            <img src={img ? img : AddImage} style={{
+                                            width: "300px",
+                                            height: "300px",
+                                          }} />
+                                          </div>
+                                          )
+                                        })
+                                      } 
+                            </Slider>
+
                         </label>
                     </div>
                     <STFormTextarea
@@ -177,20 +191,7 @@ const Header = () => {
                   </STFormBox4 >
                 </STFormBox3>
               </STFormBox2>
-                <Slider {...settings}>
-                          {
-                            imgUrl.map((img) => {
-                              return (
-                                <div key={img.id}>
-                                  <img src={img ? img : AddImage} style={{
-                                  width: "300px",
-                                  height: "300px",
-                                }} />
-                                </div>
-                                )
-                              })
-                            } 
-                  </Slider>
+                
             </STFormBox>
           ):("")}
   
@@ -309,3 +310,4 @@ const STFormButton2 = styled.button`
 const STFormTextarea = styled.textarea`
   margin-left: 20px;
 `
+

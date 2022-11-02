@@ -7,26 +7,25 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Header from "../components/Header"
 import profile from "../images/profile.jpeg"
-
+import Likes from '../components/Likes';
 //slick 
 import Slider from "react-slick"
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
+
 const PostList = () => {
 
   const posts = useSelector((state) => state.posts.posts);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   //get 해오기
   // 와칭해주는게 지켜보다가 변경이 되면 리렌더링(삭제도 됨)
     useEffect(() => {
-
       dispatch(__getPost());
         }, [posts.length]);
-const onLike = (id) => {
-  dispatch(__like(id))
-}
 
   //slick 부분
   const settings = {
@@ -68,9 +67,7 @@ const onLike = (id) => {
                                 })
                               }
                             </Slider>
-                                   
-                            <LikeButton onClick={()=>onLike(post.id)}>{post.like_state ? "❤️" : "🤍"}</LikeButton>
-                            <Span>{post.like_count}</Span>
+                              <Likes id={post.id} like={post.like_state} count={post.like_count}/>
                             <Span onClick={() => {navigate(`/PostDetail/${post.id}`)}}>💬</Span><br/>
                             {post.content} - <Time>{post.createdAt}</Time><br/>
                           </ListContent>
@@ -104,14 +101,7 @@ const ListContent = styled.div`
   margin-bottom: 10px;
 `
 
-const LikeButton = styled.button`
-border: 0 solid transparent;
-background-color: transparent;
-color : gray;
-font-size: 20px;
-padding: 10px;
-cursor: pointer;
-`
+
 
 const Span = styled.span`
 font-size: 20px;
