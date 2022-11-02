@@ -99,7 +99,7 @@ const PostDetail = () => {
                         height: "300px",
                       }}/><br/>
               <input type="text" name="content" 
-                  onChange={onChangeHandler}/>
+                  onChange={onChangeHandler} alt="업로드 이미지"/>
             </div>
           
               ) : ( 
@@ -109,8 +109,8 @@ const PostDetail = () => {
                     navigate("/")}}>삭제하기</STDetailButton>) : ""}
 
                     {checkCookie.nickname === posts.nickname ?(<STDetailButton3 onClick={()=>{toggleEdit()}}>수정하기</STDetailButton3>) : ""}<br/>
-                    {posts.nickname} - {posts.createdAt}<br/>
-                    <div>/</div>
+                    <Nickname>{posts.nickname}</Nickname><br/>
+                    
 
                             {
                               posts.img && (
@@ -120,7 +120,7 @@ const PostDetail = () => {
                                       return(
                                         <div key={index}>
                                           <img src={imgs}
-                                          style={{ width: "200px", height: "200px"}}/>
+                                          style={{ width: "320px", height: "320px"}}/>
                                         </div>
                                       )
                                     })
@@ -130,7 +130,7 @@ const PostDetail = () => {
                             }
 
                     <br/>
-                    <STDetailContent>{posts.content}</STDetailContent>
+                    <STDetailContent>{posts.content} - <Time>{posts.createdAt}</Time></STDetailContent>
               </div>
               )}
         </>)}      
@@ -139,11 +139,11 @@ const PostDetail = () => {
         {/*댓글 부분 */}
 
         <div>
-              <input type="text" 
+              <Textarea type="text" 
                 placeholder='댓글을 입력하세요'
                 value={Input2.comment || ""}
                 name="comment"
-                onChange={onChangeInputHandler}></input>
+                onChange={onChangeInputHandler}></Textarea>
               <STDetailButton4 onClick={onClickComment}> 추가하기</STDetailButton4>
               {posts.comments !== undefined &&
               (
@@ -155,7 +155,7 @@ const PostDetail = () => {
                           <div>
                             <STDetailNickname>{post.nickname}</STDetailNickname>
                             {post.comment} 
-                            {post.createdAt}
+                            - <Time>{post.createdAt}</Time>
                           </div>
                           {checkCookie.nickname === posts.nickname ?(<STDetailButton2 onClick={()=> onDeleteButton(post.commentid)} >삭제하기</STDetailButton2>) : ""}
                         </STDetailComment>
@@ -301,4 +301,18 @@ const STDetailButton4 = styled.button`
   &:disabled {
   background-color: #b2dffc;}
 `
+const Nickname = styled.span`
+font-size: 25px;
+font-weight: bold;
+`
 
+const Time = styled.span`
+  color : gray;
+`
+const Textarea = styled.textarea`
+width: 200px;
+height: 50px;
+border-radius: 20px;
+padding: 15px;
+border: none;
+`
