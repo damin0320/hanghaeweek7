@@ -7,7 +7,6 @@ import { getCookie } from '../cookie/cookie';
 import Header from "../components/Header"
 
 const PostDetail = () => {
-  
   const checkCookie = {
     'nickname' : getCookie('nickname')
   }
@@ -84,6 +83,12 @@ const PostDetail = () => {
         <STDetailContainer2>
         <STDetailContainer3>
         <div>
+          {
+            posts.nickname !== undefined &&
+          (
+            <>
+
+
           {edit ? (
 
             <div>
@@ -128,6 +133,7 @@ const PostDetail = () => {
                     <STDetailContent>{posts.content}</STDetailContent>
               </div>
               )}
+        </>)}      
         </div>
 
         {/*댓글 부분 */}
