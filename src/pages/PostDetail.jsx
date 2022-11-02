@@ -6,6 +6,11 @@ import styled from "styled-components";
 import { getCookie } from '../cookie/cookie';
 import Header from "../components/Header"
 
+//slick 
+import Slider from "react-slick"
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 const PostDetail = () => {
   const checkCookie = {
     'nickname' : getCookie('nickname')
@@ -75,6 +80,16 @@ const PostDetail = () => {
       dispatch(__deleteComment(commentid));
     };
 
+
+  //slick 부분
+    const settings = {
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1
+    };
+    
   return (
     <>
     <Header/>
@@ -110,18 +125,28 @@ const PostDetail = () => {
                     navigate("/")}}>삭제하기</STDetailButton>) : ""}
 
                     {checkCookie.nickname === posts.nickname ?(<STDetailButton3 onClick={()=>{toggleEdit()}}>수정하기</STDetailButton3>) : ""}<br/>
+
+
+
+
                     <Nickname>{posts.nickname}</Nickname><br/>
-                    
+          
+                    <Slider {...settings}>
+                           {
 
                             {
+
                               posts.img && (
                                 <>
                                   {
-                                    posts.img.map((imgs, index)=> {
+                                    posts.img.map((imgs)=> {
                                       return(
-                                        <div key={index}>
+                                        <div key={imgs.id}>
                                           <img src={imgs}
+
+
                                           style={{ width: "320px", height: "320px"}}/>
+
                                         </div>
                                       )
                                     })
@@ -129,7 +154,10 @@ const PostDetail = () => {
                                 </>
                               )
                             }
-
+                    </Slider>
+                        
+                            
+                  
                     <br/>
                     <STDetailContent>{posts.content} - <Time>{posts.createdAt}</Time></STDetailContent>
               </div>
