@@ -18,6 +18,7 @@ const PostList = () => {
   //get 해오기
   // 와칭해주는게 지켜보다가 변경이 되면 리렌더링(삭제도 됨)
     useEffect(() => {
+
       dispatch(__getPost());
         }, [posts.length]);
 const onLike = (id) => {
@@ -39,12 +40,24 @@ const onLike = (id) => {
                     <ListContainer>
                         <div>
                           <ListContent>
+
                             <img width={30} height={30}src={profile} alt="로고"/>
-                            {post.nickname}<br/>
-                            <img src={post.img}
-                            style={{ width: "400px", height: "400px"}}
-                            onClick={() => {navigate(`/PostDetail/${post.id}`);}}/><br/>
+                            {post.nickname} - {post.createdAt}
+                            
+                            {
+                              post.img.map((imgs)=> {
+                                return(
+                                  <div key={imgs.id}>
+                                    <img src={imgs}
+                                     style={{ width: "200px", height: "200px"}}
+                                     onClick={() => {navigate(`/PostDetail/${post.id}`)/>
+                                  </div>
+                                )
+                              })
+                            }
+                            <br/>
                             <LikeButton onClick={()=>onLike(post.id)}>{post.like_state ? "❤️" : "♡"}</LikeButton><Span>{post.like_count}</Span><br/>
+
                             내용 : {post.content}<br/>
                           </ListContent>
                         </div>
