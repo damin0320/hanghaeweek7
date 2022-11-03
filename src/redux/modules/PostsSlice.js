@@ -13,7 +13,7 @@ export const __addPost = createAsyncThunk(
     async (payload, thunkAPI) => {
       try {
         await axios
-          .post(`http://3.39.72.234:8080/api/feed`, payload, {
+          .post(`https://study.o-r.kr/api/feed`, payload, {
             headers: {
               enctype: "multipart/form-data",
               Access_Token: getCookie('Access_Token'),
@@ -40,7 +40,7 @@ export const __getPost = createAsyncThunk(
     "posts/__getPost",
     async (payload, thunkAPI) => {
       try {
-        const data = await axios.get("http://3.39.72.234:8080/api/feed/show", {
+        const data = await axios.get("https://study.o-r.kr/api/feed/show", {
           headers: {
             "Content-Type": `application/json`,
             Access_Token: getCookie('Access_Token'),
@@ -60,7 +60,7 @@ export const __getPost = createAsyncThunk(
     async (payload, thunkAPI) => {
       try {
         const data = await axios.delete(
-          `http://3.39.72.234:8080/api/feed/${payload}`,  {
+          `https://study.o-r.kr/api/feed/${payload}`,  {
             headers: {
               Access_Token: getCookie('Access_Token'),
               // RefreshToken: refreshToken, 생략 예정
@@ -79,7 +79,7 @@ export const __getPost = createAsyncThunk(
     "posts/__getPost",
     async (payload, thunkAPI) => {
       try {
-        const data = await axios.get(`http://3.39.72.234:8080/api/feed/show/${payload}`, {
+        const data = await axios.get(`https://study.o-r.kr/api/feed/show/${payload}`, {
           headers: {
             "Content-Type": `application/json`,
             Access_Token: getCookie('Access_Token'),
@@ -99,7 +99,7 @@ export const __getPost = createAsyncThunk(
     "posts/__editPost",
     async (payload, thunkAPI) => {
       try {
-        const data = await axios.patch(`http://3.39.72.234:8080/api/feed/${payload.id}`, payload.formData, {
+        const data = await axios.patch(`https://study.o-r.kr/api/feed/${payload.id}`, payload.formData, {
           headers: {
             enctype: "multipart/form-data",
             Access_Token: getCookie('Access_Token'),
@@ -120,7 +120,7 @@ export const __addComment = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await axios.post(
-        `http://3.39.72.234:8080/api/feed/${payload.id}/comment`,{comment : payload.comment},{
+        `https://study.o-r.kr/api/feed/${payload.id}/comment`,{comment : payload.comment},{
           headers: {
             "Content-Type": `application/json`,
             Access_Token: getCookie('Access_Token'),
@@ -141,7 +141,7 @@ export const __deleteComment = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await axios.delete(
-        `http://3.39.72.234:8080/api/feed/comment/${payload}`,{
+        `https://study.o-r.kr/api/feed/comment/${payload}`,{
           headers: {
             "Content-Type": `application/json`,
             Access_Token: getCookie('Access_Token'),
@@ -162,7 +162,7 @@ export const __like = createAsyncThunk(
   "posts/like",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.post(`http://3.39.72.234:8080/api/like/${payload}`, "", {
+      const data = await axios.post(`https://study.o-r.kr/api/like/${payload}`, "", {
         headers: {
           "Content-Type": `application/json`,
           Access_Token: getCookie('Access_Token'),
