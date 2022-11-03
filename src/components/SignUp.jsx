@@ -71,7 +71,7 @@ const SignUp = () => {
           nickname: "",
           password: "",
         })
-          window.location.replace("/signin")
+          window.location.replace("/")
       }
     },[account])
 

@@ -22,7 +22,7 @@ const Header = () => {
 
   const navigate = useNavigate();
   const handleGoToHome = () => {
-    navigate("/");
+    navigate("/postlist");
   };
 
   const handleGoToProfile = () => {
@@ -118,7 +118,7 @@ const Header = () => {
 
       //Api 날리기
       dispatch(__addPost(formData));
-      window.location.replace("/")
+      window.location.replace("/postlist")
     }
 
 
@@ -139,7 +139,7 @@ const Header = () => {
   return (
 
     <Head className="head">
-      
+
       <div>
         <img width={150} height={40}src={instagram} alt="로고" onClick={handleGoToHome}/>
       </div>

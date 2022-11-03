@@ -31,6 +31,7 @@ const SignIn = () => {
       password: login.password,
     }
     dispatch(__userLogin(obj))
+    //navigate('/postlist')
     
   }
 

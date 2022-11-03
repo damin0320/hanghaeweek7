@@ -32,7 +32,7 @@ export const __userLogin = createAsyncThunk(
         setCookie("Access_Token", Access_Token);
         setCookie("nickname", nickname)
         alert("로그인 성공");
-        window.location.replace("/")
+        window.location.replace("/postlist")
       }
       return thunkAPI.fulfillWithValue(payload)
     } catch (error) {

@@ -25,7 +25,7 @@ const Mypage = () => {
       delCookie("Access_Token")
       delCookie("nickname")
       alert("이용하시려면 다시 로그인 해주세요")
-      window.location.replace("/signin")
+      window.location.replace("/")
     }
 
   // 마이페이지 본인이 올린 사진 받아오기
