@@ -98,34 +98,14 @@ const PostDetail = () => {
         <STDetailContainer3>
         <div>
           {
-            posts.nickname !== undefined &&
-          (
+            posts.nickname !== undefined &&(
             <>
-
           {edit ? (
 
             <div>
               <STDetailButton3  onClick={()=> onClickUdapte(input)}>수정완료</STDetailButton3 ><br/>
-              <img src={posts.img}
-                      style={{
-                        width: "320px",
-                        height: "320px",
-                      }} alt="업로드 이미지"/><br/>
-              <Input type="text" name="content" 
-                  onChange={onChangeHandler} placeholder="수정할 내용을 입력해주세요"/>
-              <STcancelButton  onClick={()=>{toggleEdit()}}>취소</STcancelButton ><br/>
-            </div>
-          
-              ) : ( 
-                <div>
-                    {checkCookie.nickname === posts.nickname ?(<STDetailButton onClick={()=> 
-                    {onPostDelete(posts.id)
-                    navigate("/")}}>삭제하기</STDetailButton>) : ""}
-
-                    {checkCookie.nickname === posts.nickname ?(<STDetailButton3 onClick={()=>{toggleEdit()}}>수정하기</STDetailButton3>) : ""}<br/>
-
-                    <Nickname>{posts.nickname}</Nickname><br/>
-                            {
+              <STcancelButton  onClick={()=>{toggleEdit()}}>취소</STcancelButton ><br/>            
+                           {
                               posts.img && (
                                 <>
                                  <StyledSlider {...settings}>
@@ -143,43 +123,78 @@ const PostDetail = () => {
                                 </>
                               )
                             }
+              <STReviseContent>
+                <Input type="text" name="content" onChange={onChangeHandler} placeholder="수정할 내용을 입력해주세요"/>
+              </STReviseContent>
+            </div>
+          
+              ) : ( 
+
+              <div>
+                {checkCookie.nickname === posts.nickname ?(<STDetailButton onClick={()=> {onPostDelete(posts.id); navigate("/")}}>삭제하기</STDetailButton>) : ""}
+
+                {checkCookie.nickname === posts.nickname ?(<STDetailButton3 onClick={()=>{toggleEdit()}}>수정하기</STDetailButton3>) : ""} <br/>
+                  <Nickname>{posts.nickname}</Nickname><br/>
+                           
+                            {posts.img && (
+                                <>
+                                 <StyledSlider {...settings}>
+                                    {
+                                      posts.img.map((imgs)=> {
+                                        return(
+                                          <div key={imgs.id}>
+                                            <img src={imgs}
+                                            style={{ width: "320px", height: "320px"}}/>
+                                          </div>
+                                        )
+                                      })
+                                    }
+                                  </StyledSlider>
+                                </>
+                              )}
                     <br/>
                     <STDetailContent>{posts.content} - <Time>{posts.createdAt}</Time></STDetailContent>
-              </div>
+                    <br/>
+
+
+                    {/*댓글 부분 */}
+                  <STCommentBox>
+
+                  <STCommentList>
+                    {posts.comments !== undefined &&(
+                        <>
+                          {
+                            posts.comments.map((post, index)=>{
+                              return (
+                                <STDetailComment key={index}>
+                                  <div>
+                                    <STDetailNickname>{post.nickname}</STDetailNickname>
+                                    {post.comment} 
+                                    - <Time>{post.createdAt}</Time>
+                                  </div>
+                                  {checkCookie.nickname === posts.nickname ?(<STDetailButton2 onClick={()=> onDeleteButton(post.commentid)} >삭제하기</STDetailButton2>) : ""}
+                                </STDetailComment>
+                              )
+                            })
+                          }
+                        </>
+                      )}
+                 </STCommentList>
+
+                <STComment>
+                    <Textarea type="text" 
+                      placeholder='댓글을 입력하세요'
+                      value={Input2.comment || ""}
+                      name="comment"
+                      onChange={onChangeInputHandler}></Textarea>
+                    <STDetailButton4 onClick={onClickComment}> 추가하기</STDetailButton4>
+                </STComment>
+
+            </STCommentBox>
+            </div>
               )}
         </>)}      
         </div>
-
-        {/*댓글 부분 */}
-
-            <STComment>
-                <Textarea type="text" 
-                  placeholder='댓글을 입력하세요'
-                  value={Input2.comment || ""}
-                  name="comment"
-                  onChange={onChangeInputHandler}></Textarea>
-                <STDetailButton4 onClick={onClickComment}> 추가하기</STDetailButton4>
-                {posts.comments !== undefined &&
-                (
-                  <>
-                    {
-                      posts.comments.map((post, index)=>{
-                        return (
-                          <STDetailComment key={index}>
-                            <div>
-                              <STDetailNickname>{post.nickname}</STDetailNickname>
-                              {post.comment} 
-                              - <Time>{post.createdAt}</Time>
-                            </div>
-                            {checkCookie.nickname === posts.nickname ?(<STDetailButton2 onClick={()=> onDeleteButton(post.commentid)} >삭제하기</STDetailButton2>) : ""}
-                          </STDetailComment>
-                        )
-                      })
-                    }
-                  </>
-                )
-              }
-            </STComment>
             </STDetailContainer3>
             </STDetailContainer2>
           </STDetailContainer>
@@ -195,7 +210,7 @@ export default PostDetail
 const STDetailContainer = styled.div`
   //모달창 크기
   width: 100%;
-  height: 100%;
+  height: 1000px;
   //최상단
   z-index: 999;
   //중앙배치
@@ -205,6 +220,7 @@ const STDetailContainer = styled.div`
   transform: translate(-50%, -50%);
   //모달창 디자인
   background-color: rgba(196, 196, 196, 0.6);
+  margin-top: 50px;
   /* border: 1px solid black; */
   /* border-radius: 8px; */
   
@@ -219,7 +235,7 @@ const STDetailContainer2 = styled.div`
 
 const STDetailContainer3 = styled.div`
   width: 600px;
-  height: 600px;
+  height: 940px;
   background-color: #f1f1f1;
   border-radius: 14px;
   background-color: #fff !important;
@@ -239,13 +255,14 @@ const STDetailComment = styled.div`
   .div{
     float :left;
   }
+  margin-top: 12px;
 `
 const STDetailNickname = styled.b`
   margin-right: 15px;
 `
 const STDetailContent = styled.div`
-  top: 50px;
-
+  margin-top: 400px;
+  margin-left: 20px;
 `
 
 const STDetailButton = styled.button`
@@ -310,6 +327,7 @@ const STDetailButton4 = styled.button`
   font-weight: bold;
   width: 100px;
   height: 30px;
+  margin-top: 100px;
 
 
   &:disabled {
@@ -317,17 +335,28 @@ const STDetailButton4 = styled.button`
 `
 
 const Input = styled.input`
-width: 200px;
-background-color: transparent;
-border-radius: 10px;
-border: 1px solid gray;
+  width: 95%;
+  height: 300px;
+  background-color: #dbd3d3;
+  border-radius: 10px;
+  border: none;
+  margin-left: 10px;
+  font-size: 18px;
 `
 
 const STcancelButton = styled.button`
-color : red;
-background-color: transparent;
-border-radius: 10px;
-border: 1px solid gray;
+position: absolute;
+  right: 30px;
+  background-color: #d62176;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  width: 100px;
+  height: 30px;
+
+  &:disabled {
+  background-color: #b2dffc;}
 `
 
 const Nickname = styled.span`
@@ -340,12 +369,15 @@ const Time = styled.span`
   color : gray;
 `
 const Textarea = styled.textarea`
-width: 200px;
-height: 50px;
-border-radius: 20px;
-padding: 15px;
-border: none;
-z-index: 999;
+  margin-top : 50px;
+  width: 400px;
+  height: 100px;
+  padding: 15px;
+  border: none;
+  z-index: 999;
+  border : 1px solid gray;
+  border-radius: 5px;
+
 `
 
 const StyledSlider = styled(Slider)`
@@ -354,13 +386,13 @@ const StyledSlider = styled(Slider)`
     top:50%;
     //display: block;
     width:600px;
-    height: 380px;
+    height: 0px;
     cursor: pointer;
     
     color : transparent;
     //border : 1px solid black;
-    outline: 1px solid black;
-    background: black;
+    //outline: 1px solid black;
+    //background: black;
     //z-index: 2;
     
    div{
@@ -372,4 +404,21 @@ const StyledSlider = styled(Slider)`
 const STComment = styled.div`
   padding: 15px;
   margin-top: 100px;
+`
+
+const STCommentList = styled.div`
+  margin-top: 40px;
+  margin-left: 20px;
+  
+`
+
+const STCommentBox = styled.div`
+  background-color : #dbd3d3;
+  border : 1px solid transparent;
+  border-radius: 14px;
+  width: 95%;
+  margin: auto;
+`
+const STReviseContent = styled.div`
+  margin-top: 500px;
 `

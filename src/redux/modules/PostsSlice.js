@@ -267,7 +267,7 @@ const PostsSlice = createSlice({
       [__like.fulfilled]: (state, action) => {
           state.isLoading = false;
           //console.log(action.payload.liked);
-         state.posts.like_state= action.payload.liked;
+         //state.posts.like_state= action.payload.liked;
       },
       [__like.rejected]: (state, action) => {
           state.isLoading = false;

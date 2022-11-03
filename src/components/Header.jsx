@@ -19,10 +19,12 @@ import "slick-carousel/slick/slick-theme.css";
 
 
 const Header = () => {
+
   const navigate = useNavigate();
   const handleGoToHome = () => {
     navigate("/");
   };
+
   const handleGoToProfile = () => {
     navigate("/mypage");
   };
@@ -33,6 +35,7 @@ const Header = () => {
   //modal창 노출
   const [modalOpen, setModalOpen] = useState(false);
   const showModal = () => {setModalOpen(!modalOpen);};
+
 
   // 게시글 업로드
   //1. content onchange
@@ -70,7 +73,7 @@ const Header = () => {
 
         //이미지 압축 지정 
         const options = {
-          maxSizeMB: 0.02,
+          maxSizeMB: 0.5,
           maxWidthOrHeight: 220,
           useWebWorker: true,
         };
@@ -95,6 +98,7 @@ const Header = () => {
 
     }
 
+
     //2-2 image onsubmit 부분
     const onSubmit = () => {
 
@@ -118,91 +122,84 @@ const Header = () => {
     }
 
 
-  useEffect(() => {
-    dispatch(__userFeed())
-  }, [dispatch])
+    useEffect(() => {
+      dispatch(__userFeed())
+    }, [dispatch])
 
 
-    //slick 부분
-    const settings = {
-      infinite: true,
-      //speed: 500,
-      dots : false,
-      slidesToShow: 1,
-      slidesToScroll: 1
-    };
+      //slick 부분
+      const settings = {
+        infinite: true,
+        //speed: 500,
+        dots : false,
+        slidesToShow: 1,
+        slidesToScroll: 1
+      };
 
   return (
+
     <Head className="head">
+      
       <div>
-    <img width={150} height={40}src={instagram} alt="로고" onClick={handleGoToHome}/>
-    </div>
-    <IconBox>
-    <HomeBox className="homeBox">
-    <img width={30} height={30} src={home} alt="홈" onClick={handleGoToHome}/>
+        <img width={150} height={40}src={instagram} alt="로고" onClick={handleGoToHome}/>
+      </div>
+      <IconBox>
+      <HomeBox className="homeBox">
+      <img width={30} height={30} src={home} alt="홈" onClick={handleGoToHome}/>
 
-    <div method="post" id="add" encType="multipart/form-data">
-      <img width={30} height={30} src={plus} alt="추가하기" onClick={showModal}/>
-
-          {/* <button >모달 띄우기</button> */}
-          {modalOpen? (
-            <STFormBox>
-              <STFormBox2>
-                <STFormBox3>
-                <span>새 게시물 만들기</span>  
-                  <STButtons>
-                    <STFormButton onClick={showModal}>이전</STFormButton>
-                    
-                    <STFormButton3 onClick={()=> { imgRef.current.click()}}> 업로드 버튼</STFormButton3>
-                    {/* 내용 들어갈 곳 <h4>{account[0]} </h4> */}
-                    <STFormButton2 type="submit" form="add" onClick={()=>{onSubmit(); showModal();}}>입력하기</STFormButton2>
-                  </STButtons>
-                  <STFormBox4 >
+      <div method="post" id="add" encType="multipart/form-data">
+        <img width={30} height={30} src={plus} alt="추가하기" onClick={showModal}/>
+            {modalOpen? (
+              <STFormBox>
+                <STFormBox2>
+                  <STFormBox3>
+                  <span>새 게시물 만들기</span>  
+                    <STButtons>
+                      <STFormButton onClick={showModal}>이전</STFormButton>
+                      <STFormButton3 onClick={()=> { imgRef.current.click()}}> 업로드 버튼</STFormButton3>
+                      <STFormButton2 type="submit" form="add" onClick={()=>{onSubmit(); showModal();}}>입력하기</STFormButton2>
+                    </STButtons>
                     <div><br/>
-                      <label htmlFor="imgFile">
-                        
+                        <label htmlFor="imgFile">
+                              <input
+                                style={{ display: "none" }}
+                                type="file"
+                                id="imgFile"
+                                onChange={onChangeImage}
+                                accept="image/*"
+                                ref={imgRef}
+                                name="imgFile"/>
 
-                            <input
-                              style={{ display: "none" }}
-                              type="file"
-                              id="imgFile"
-                              onChange={onChangeImage}
-                              accept="image/*"
-                              ref={imgRef}
-                              name="imgFile"/>
-
-                              <StyledSlider {...settings}>
+                        <StyledSlider {...settings}>
                                     {
                                       imgUrl.map((img) => {
                                         return (
                                           <div key={img.id}>
-                                            <img src={img ? img : AddImage}  style={{height: "250px", width : "250px"}}/>
+                                            <img src={img ? img : AddImage}  style={{height: "300px", width : "300px"}}/>
                                           </div>
                                           )
                                         })
-                                      } 
-                            </StyledSlider>
-                            
-
+                                    }
+                        </StyledSlider>
                         </label>
-                    </div>
-                   </STFormBox4 >
-                   <STFormTextarea
-                    onChange={contentHandler} 
-                    type="text" placeholder='문구 입력...' 
-                    name="content"></STFormTextarea>
-               </STFormBox3>
-              </STFormBox2>
-                
-            </STFormBox>
-          ):("")}
-  
-        </div>
+                    </div >
 
-    <img width={30} height={30}src={profile} alt="프로필" onClick={handleGoToProfile}/>
+                    <STFormTextarea
+                      onChange={contentHandler} 
+                      type="text" placeholder='문구 입력...' 
+                      name="content">
+                    </STFormTextarea>
+                  </STFormBox3>
+                </STFormBox2>
+              </STFormBox>
+            ):("")}
+    
+          </div>
 
-    </HomeBox>
-    </IconBox>
+      <img width={30} height={30}src={profile} alt="프로필" onClick={handleGoToProfile}/>
+
+      </HomeBox>
+      </IconBox>
   </Head>
   )
 }
@@ -224,9 +221,7 @@ const HomeBox = styled.div`
 const IconBox = styled.div`
 img {
   margin-right : 10px;
-}
-`;
-
+}`;
 
 const STFormBox = styled.div`
   //모달창 크기
@@ -241,14 +236,10 @@ const STFormBox = styled.div`
   transform: translate(-50%, -50%);
   //모달창 디자인
   background-color: rgba(196, 196, 196, 0.6);
-  /* border: 1px solid black; */
-  /* border-radius: 8px; */
-  
 `
+
 const STFormBox2 = styled.div`
-  /* padding: 20px 20px 28px 20px; */
   display: block;
-  //position: absolute;
   width: 100%;
 `
 
@@ -259,19 +250,10 @@ const STFormBox3 = styled.div`
   border-radius: 14px;
   background-color: #fff !important;
   margin : auto;
-  //margin-bottom: 400px;
   justify-content: center;
   align-items: center;
   align-self: center;
- // display: flex;
-  //flex-direction: column;
   position: relative;
-`
-const STFormBox4 = styled.div`
-  //height : 60px;
-  //background-color: red;
-  //display: flex;
-  //flex-direction: row;
 `
 
 const STFormButton = styled.button`
@@ -316,7 +298,7 @@ const STFormButton3 = styled.button`
   position: absolute;
   right:250px;
   top: 10px;
-  background-color: #0095f6;
+  background-color: #d62176;
   color: white;
   border: none;
   border-radius: 5px;
@@ -330,32 +312,22 @@ const STFormButton3 = styled.button`
 `
 
 const STFormTextarea = styled.textarea`
-  margin-top:580px;
+  margin-top:500px;
   margin-left: 30px;
   z-index: 999;
   width:500px;
-  height: 100px;
+  height: 200px;
   border : 1px solid gray;
   border-radius: 5px;
   padding : 5px;
-
 `
 
 
 const StyledSlider = styled(Slider)`
-
-   //position: absolute;
-    //top:50%;
-    //display: block;
     width:400x;
     height: 0px;
     cursor: pointer;
-    
     color : transparent;
-    //border : 1px solid black;
-    //outline: 1px solid black;
-
-    //z-index: 2;
     
    div{
     margin-top: 10px;
@@ -366,5 +338,4 @@ const StyledSlider = styled(Slider)`
 
 const STButtons = styled.div`
   justify-content: space-between;
-
 `

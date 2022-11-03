@@ -40,34 +40,31 @@ const PostList = () => {
 
     <>  
     <Header/>
-    {
-      posts.length > 0 &&
-        (
+    {posts.length > 0 &&(
           <>
-            {
-              posts.map((post) => {
+            {posts.map((post) => {
                 return (
                   <div key={post.id}>
                     <ListContainer>
                         <div>
                           <ListContent>
-
-                            <img width={30} height={30}src={profile} alt="프로필"/>
-                            <Nickname>{post.nickname}</Nickname> 
-                           
-                            <Slider {...settings}>
-                              {
-                                post.img.map((imgs)=> {
-                                  return(
-                                    <div key={imgs.id}>
-                                      <img src={imgs}
-                                      style={{ width: "400px", height: "400px"}}/>
-                                    </div>
-                                  )
-                                })
-                              }
-                            </Slider>
-                              <Likes id={post.id} like={post.like_state} count={post.like_count}/>
+                            <STListTop>
+                              <img width={30} height={30}src={profile} alt="프로필"/>
+                              <Nickname>{post.nickname}</Nickname> 
+                            </STListTop>
+                              <Slider {...settings}>
+                                {
+                                  post.img.map((imgs)=> {
+                                    return(
+                                      <div key={imgs.id}>
+                                        <img src={imgs}
+                                        style={{ width: "400px", height: "400px"}}/>
+                                      </div>
+                                    )
+                                  })
+                                }
+                              </Slider>
+                            <Likes id={post.id} like={post.like_state} count={post.like_count}/>
                             <Span onClick={() => {navigate(`/PostDetail/${post.id}`)}}>💬</Span><br/>
                             {post.content} - <Time>{post.createdAt}</Time><br/>
                           </ListContent>
@@ -75,11 +72,9 @@ const PostList = () => {
                     </ListContainer>
                   </div>
                 )
-              })
-            }
+              })}
           </>
-        )
-    }
+        )}
     </>
   )
   }
@@ -116,4 +111,8 @@ padding: 20px;
 
 const Time = styled.span`
   color : gray;
+`
+
+const STListTop = styled.div`
+  margin: 8px;
 `

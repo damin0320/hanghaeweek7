@@ -15,35 +15,29 @@ import {__userFeed} from "../redux/modules/LoginSlice";
 
 const Mypage = () => {
 
-const {detail, feeds} = useSelector((state) => state.account)
-const dispatch = useDispatch()
-const navigate = useNavigate();
+  const {detail, feeds} = useSelector((state) => state.account)
+  const dispatch = useDispatch()
+  const navigate = useNavigate();
 
-// 유저 닉네임 받아오기
-// useEffect(() => {
-//   dispatch(__userProfile())
-// }, [dispatch])
+  // 로그아웃
+    const onLogoutHandler = () => {
+      dispatch(__userLogout())
+      delCookie("Access_Token")
+      delCookie("nickname")
+      alert("이용하시려면 다시 로그인 해주세요")
+      window.location.replace("/signin")
+    }
 
+  // 마이페이지 본인이 올린 사진 받아오기
+    useEffect(() => {
+      dispatch(__userFeed());
+        }, []);
 
-// 로그아웃
-const onLogoutHandler = () => {
-  dispatch(__userLogout())
-  delCookie("Access_Token")
-  delCookie("nickname")
-  alert("이용하시려면 다시 로그인 해주세요")
-  window.location.replace("/signin")
-}
+    useEffect(() => {
+    }, [detail])
 
-// 마이페이지 본인이 올린 사진 받아오기
-useEffect(() => {
-  dispatch(__userFeed());
-    }, []);
-
-useEffect(() => {
-}, [detail])
-
-useEffect(() => {
-}, [feeds])
+    useEffect(() => {
+    }, [feeds])
 
   return (
     <>
@@ -56,10 +50,8 @@ useEffect(() => {
       <LogoutBox>
         <span onClick={onLogoutHandler}>로그아웃</span>
       </LogoutBox>
-
-    <Hr/>
-        {
-          feeds.length > 0 && (
+     <Hr/>
+        {feeds.length > 0 && (
             <>
               <div>
                   {feeds.map((feed) => {
@@ -74,8 +66,7 @@ useEffect(() => {
                   })}
               </div>
            </>
-          )
-        }
+          )}
     </>
   )
 }

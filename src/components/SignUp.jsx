@@ -31,9 +31,9 @@ const SignUp = () => {
     password: join.password,
   }
 
-const useremailCheck = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
-const usernicknameCheck = /^[a-z]+[a-z0-9]{5,19}$/g;
-const passwordCheck = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,16}$/;
+  const useremailCheck = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+  const usernicknameCheck = /^[a-z]+[a-z0-9]{5,19}$/g;
+  const passwordCheck = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,16}$/;
 
   const onSubmitHandler = (event) => {
     event.preventDefault()
@@ -61,48 +61,48 @@ const passwordCheck = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,16}$/;
 
     dispatch(__userSignUp(obj))
   }
-  useEffect(() => {
-    
-    if(account.statusCode === 200){
-      alert("회원가입이 완료되었습니다.")
-      setJoin({
-        email : "",
-        nickname: "",
-        password: "",
-      })
-        window.location.replace("/signin")
-    }
-  },[account])
+  
+    useEffect(() => {
+      
+      if(account.statusCode === 200){
+        alert("회원가입이 완료되었습니다.")
+        setJoin({
+          email : "",
+          nickname: "",
+          password: "",
+        })
+          window.location.replace("/signin")
+      }
+    },[account])
 
   return (
-<SignupContainer>
+    <SignupContainer>
       <SignupBox onSubmit={onSubmitHandler}>
         <LogoBox>
-        <img width={200} height={60}src={instagram} alt="로고" />
+         <img width={200} height={60}src={instagram} alt="로고" />
         </LogoBox>
         <SignupText>친구들의 사진과 동영상을 보려면 가입하세요</SignupText>
-        <InputBox>
-          <Input
-            placeholder='이메일 주소'
-            name='email'
-            onChange={onChangeHandler}
-          />
-          <Input
-            placeholder='사용자 이름'
-            name='nickname'
-            onChange={onChangeHandler}
-          />
-          <Input
-            placeholder='비밀번호 영어 숫자 포함 8자 이상'
-            type='password'
-            name='password'
-            onChange={onChangeHandler}
-          />
-          <SignupButton onClick={onSubmitHandler}>회원가입</SignupButton>
-        </InputBox>
+          <InputBox>
+            <Input
+              placeholder='이메일 주소'
+              name='email'
+              onChange={onChangeHandler}
+            />
+            <Input
+              placeholder='사용자 이름'
+              name='nickname'
+              onChange={onChangeHandler}
+            />
+            <Input
+              placeholder='비밀번호 영어 숫자 포함 8자 이상'
+              type='password'
+              name='password'
+              onChange={onChangeHandler}
+            />
+            <SignupButton onClick={onSubmitHandler}>회원가입</SignupButton>
+          </InputBox>
       </SignupBox>
-      <LoginBox>
-        이미 계정이 있으신가요?{' '}
+      <LoginBox> 이미 계정이 있으신가요?{' '}
         <span onClick={() => navigate('/signin')}>로그인</span>
       </LoginBox>
     </SignupContainer>
@@ -205,29 +205,3 @@ const LoginBox = styled.div`
     cursor: pointer;
   }
 `;
-
-// const onCheckEmail = () => {
-//   dispatch(__checkEmail(obj.useremail))
-// }
-
-// useEffect(() => {
-//   if(emailCheck !== undefined){
-//     if(emailCheck.success === true){
-//       return alert("사용 가능한 이메일입니다.")
-//     }else{
-//       return alert("이미 사용중인 이메일이 있습니다.")
-//     }
-//   }
-// }, [dispatch, emailCheck])
-// const onCheckname = () => {
-//   dispatch(__checkName(obj.nickname))
-// }
-// useEffect(() => {
-//   if(nameCheck !== undefined){
-//     if(nameCheck.success === true){
-//       return alert("사용 가능한 닉네임입니다.")
-//     }else{
-//       return alert("이미 사용중인 닉네임이 있습니다.")
-//     }
-//   }
-// }, [dispatch, nameCheck])
