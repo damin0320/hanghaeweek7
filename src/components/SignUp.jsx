@@ -71,7 +71,7 @@ const SignUp = () => {
           nickname: "",
           password: "",
         })
-          window.location.replace("/signin")
+          window.location.replace("/")
       }
     },[account])
 
@@ -103,7 +103,7 @@ const SignUp = () => {
           </InputBox>
       </SignupBox>
       <LoginBox> 이미 계정이 있으신가요?{' '}
-        <span onClick={() => navigate('/signin')}>로그인</span>
+        <span onClick={() => navigate('/')}>로그인</span>
       </LoginBox>
     </SignupContainer>
   );

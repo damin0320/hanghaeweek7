@@ -131,7 +131,7 @@ const PostDetail = () => {
               ) : ( 
 
               <div>
-                {checkCookie.nickname === posts.nickname ?(<STDetailButton onClick={()=> {onPostDelete(posts.id); navigate("/")}}>삭제하기</STDetailButton>) : ""}
+                {checkCookie.nickname === posts.nickname ?(<STDetailButton onClick={()=> {onPostDelete(posts.id); navigate("/postlist")}}>삭제하기</STDetailButton>) : ""}
 
                 {checkCookie.nickname === posts.nickname ?(<STDetailButton3 onClick={()=>{toggleEdit()}}>수정하기</STDetailButton3>) : ""} <br/>
                   <Nickname>{posts.nickname}</Nickname><br/>

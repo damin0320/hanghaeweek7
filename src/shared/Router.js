@@ -13,7 +13,7 @@ const Router = () => {
     <BrowserRouter>
       <Routes>
         {/* 로그인 페이지 이동하기 */}
-        <Route path='signin' element={<SignInPage />} />
+        <Route path='/' element={<SignInPage />} />
 
         {/* 회원가입 페이지 이동하기 */}
         <Route path='signup' element={<SignUpPage />} />
@@ -22,7 +22,7 @@ const Router = () => {
         <Route path='/addpost' element={<AddPost />} />
         
         {/* 게시글 홈으로 이동하기 */}
-        <Route path='/' element={<PostList />} />
+        <Route path='/postlist' element={<PostList />} />
 
         {/* 포스트리스트 카드별 상세보기 페이지로 이동하기 */}
         <Route path='/PostDetail/:id' element={<PostDetail />} />
